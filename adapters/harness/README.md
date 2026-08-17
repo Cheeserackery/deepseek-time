@@ -6,4 +6,4 @@ Harness currently requires client plugins to be built within a source checkout. 
 
 Run `npm run build` in this repository after changing the shared core. It stages `time-state.mjs` and the generated SVG path module beside `src/client.tsx`.
 
-For an already installed DSH profile, the generated package can be installed without a source checkout: copy `package.json` and `lib/client.js` into the profile's shared `node_modules/deepseek-time/` directory, then add `{ id: 'deepseek-time', name: 'deepseek-time' }` to the profile's `cordis.patch.yml` insert list. The next DSH launch scans the package's `dsh.client` metadata and loads its bundled client module.
+For an already installed DSH profile, use the official profile plugin command with this package. Its `dsh.bundle` metadata automatically contributes the `deepseek-time` Loader entry; no manual edit to the profile's `cordis.patch.yml` is needed.

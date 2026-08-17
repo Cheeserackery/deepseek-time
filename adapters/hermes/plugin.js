@@ -168,7 +168,7 @@ export default {
   register(ctx) {
     ctx.register({
       id: 'composer-status',
-      area: COMPOSER_AREAS.bottom,
+      area: COMPOSER_AREAS.underside,
       order: 20,
       render: () => jsx(DeepSeekTimeWidget, {}),
     })

@@ -22,8 +22,12 @@ npm run verify
 
 ## Installation Notes
 
-Hermes: run `npm run build`, then copy only `adapters/hermes/plugin.js` to `$HERMES_HOME/desktop-plugins/deepseek-time/plugin.js` and reload desktop plugins. The generated disk plugin is self-contained, as required by Hermes Desktop, and its widget is fixed below the composer.
+Hermes: run `npm run build`, then copy only `adapters/hermes/plugin.js` to `$HERMES_HOME/desktop-plugins/deepseek-time/plugin.js` and reload desktop plugins. The generated disk plugin is self-contained, as required by Hermes Desktop, and its widget is fixed below the entire composer, outside the input surface.
 
 DeepSeek Harness: see `adapters/harness/README.md`. Its preview client-plugin protocol requires the adapter to be built in a Harness source checkout.
 
 Codex: install the packaged plugin through a personal marketplace, then invoke `show_deepseek_time`. Its MCP App requests picture-in-picture; hosts that do not provide this mode retain the same live status card inline.
+
+## GitHub Distribution
+
+This repository is self-contained and can be published directly to GitHub. Consumers should clone it, run `npm run build`, and follow the Hermes or Harness installation notes above. The GitHub repository itself does not automatically register a local desktop plugin in either product's in-app search catalog; catalog integration requires a separate marketplace submission by the corresponding product.

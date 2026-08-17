@@ -40,7 +40,7 @@ npm run verify
 $HERMES_HOME/desktop-plugins/deepseek-time/plugin.js
 ```
 
-重新加载 Hermes Desktop 插件。该插件固定显示在 composer 下方，不支持拖动。
+重新加载 Hermes Desktop 插件。该插件固定显示在整个 composer 下方、输入框外部，不支持拖动。
 
 ### DeepSeek Harness
 
@@ -48,12 +48,7 @@ Harness 官方客户端插件需要在 Harness 源码检出目录中构建。将
 
 具体步骤参见 `adapters/harness/README.md`。
 
-对于已经安装的 DSH profile，也可以直接运行 `npm run build`，将 `adapters/harness/package.json` 和生成的 `adapters/harness/lib/client.js` 放入 profile 共享的 `node_modules/deepseek-time/`，再在 `cordis.patch.yml` 的插入列表中加入：
-
-```yaml
-- id: deepseek-time
-  name: 'deepseek-time'
-```
+对于已经安装的 DSH profile，应使用 DSH 官方 profile 插件命令安装此包。包内的 `dsh.bundle` 元数据会自动注册 `deepseek-time` Loader 条目，不需要手动修改 profile 的 `cordis.patch.yml`。
 
 下次启动 DSH 时会自动扫描并加载该客户端 bundle。
 
@@ -70,3 +65,9 @@ Codex UI 会请求画中画模式，使状态在继续对话时保持可见。�
 <https://api-docs.deepseek.com/quick_start/pricing>
 
 产品价格和时段可能调整，使用前请以官方页面为准。
+
+## GitHub 发布
+
+本仓库包含共享核心、三端适配器、构建脚本和测试，可以直接发布到 GitHub。使用者克隆仓库后运行 `npm run build`，再按照上面的 Hermes 或 Harness 安装说明操作。
+
+仅将仓库放到 GitHub 不会自动把本地桌面插件加入 Hermes 或 DSH 的应用内搜索目录；若要出现在官方插件列表中，还需要分别向对应产品的 marketplace 提交审核。
