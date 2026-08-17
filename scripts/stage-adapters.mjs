@@ -8,6 +8,7 @@ const timeState = await readFile(resolve(root, 'packages/core/src/time-state.mjs
 const sourceSvg = await readFile(resolve(root, '图标/DeepSeek.svg'), 'utf8')
 const hermesTemplate = await readFile(resolve(root, 'adapters/hermes/plugin.template.js'), 'utf8')
 const harnessTemplate = await readFile(resolve(root, 'adapters/harness/client.template.js'), 'utf8')
+const harnessHostTemplate = await readFile(resolve(root, 'adapters/harness/host.template.mjs'), 'utf8')
 const pathMatch = sourceSvg.match(/<path[^>]*\sd="([^"]+)"/)
 if (pathMatch === null) throw new Error('Unable to find the DeepSeek mark path in 图标/DeepSeek.svg')
 const mark = `/** Generated from 图标/DeepSeek.svg. Do not edit manually. */\n\nexport const DEEPSEEK_MARK_PATH = ${JSON.stringify(pathMatch[1])}\n`
@@ -23,6 +24,7 @@ const targets = [
   ['adapters/harness/src/time-state.mjs', timeState],
   ['adapters/harness/src/deepseek-mark.mjs', mark],
   ['adapters/harness/lib/client.js', harnessBundle],
+  ['adapters/harness/lib/index.js', harnessHostTemplate],
   ['adapters/codex/deepseek-time/time-state.mjs', timeState],
   ['adapters/codex/deepseek-time/time-state.browser.js', browserTimeState],
   ['adapters/codex/deepseek-time/deepseek-mark.mjs', mark],

@@ -1,4 +1,4 @@
-import { COMPOSER_AREAS } from '@hermes/plugin-sdk'
+import { STATUSBAR_AREAS } from '@hermes/plugin-sdk'
 import { useEffect, useState } from 'react'
 import { jsx, jsxs } from 'react/jsx-runtime'
 
@@ -23,11 +23,11 @@ function DeepSeekTimeWidget() {
   return jsxs('div', {
     role: 'status',
     'aria-label': `${state.label}: ${state.remainingText}`,
-    className: 'flex w-12 flex-col items-center gap-1 py-1',
+    className: 'flex h-5 items-center gap-1.5 px-1',
     children: [
       jsx('svg', {
-        width: 30,
-        height: 30,
+        width: 18,
+        height: 18,
         viewBox: '0 0 50 50',
         fill: 'none',
         'aria-hidden': true,
@@ -48,8 +48,8 @@ export default {
   name: 'DeepSeek Time',
   register(ctx) {
     ctx.register({
-      id: 'composer-status',
-      area: COMPOSER_AREAS.underside,
+      id: 'statusbar-time',
+      area: STATUSBAR_AREAS.left,
       order: 20,
       render: () => jsx(DeepSeekTimeWidget, {}),
     })

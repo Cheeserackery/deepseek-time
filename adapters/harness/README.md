@@ -6,4 +6,4 @@ Harness currently requires client plugins to be built within a source checkout. 
 
 Run `npm run build` in this repository after changing the shared core. It stages `time-state.mjs` and the generated SVG path module beside `src/client.tsx`.
 
-For an already installed DSH profile, use the official profile plugin command with this package. Its `dsh.bundle` metadata automatically contributes the `deepseek-time` Loader entry; no manual edit to the profile's `cordis.patch.yml` is needed.
+For an already installed DSH profile, use the official profile plugin command with this package. Its `dsh.bundle` metadata automatically contributes the `deepseek-time` Loader entry; no manual edit to the profile's `cordis.patch.yml` is needed. Keep the generated `lib/index.js` with the package: it is the intentionally empty host entry that lets DSH load this Web client-only bundle safely.

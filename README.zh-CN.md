@@ -13,7 +13,7 @@ DeepSeek Time 是一个固定位置的状态指示器，用于显示 DeepSeek �
 
 - `packages/core/`：共享的时间规则、倒计时格式化和颜色状态逻辑。
 - `adapters/harness/`：DeepSeek Harness Web 客户端插件，使用原生 `conversation.composer.dock` 插槽。
-- `adapters/hermes/`：Hermes Desktop 磁盘插件，使用原生 composer bottom 插槽。
+- `adapters/hermes/`：Hermes Desktop 磁盘插件，使用原生左侧状态栏插槽。
 - `adapters/codex/deepseek-time/`：Codex 插件，提供 MCP App 状态卡并请求画中画展示。
 - `tests/`：共享核心的时段边界和倒计时测试。
 
@@ -40,7 +40,7 @@ npm run verify
 $HERMES_HOME/desktop-plugins/deepseek-time/plugin.js
 ```
 
-重新加载 Hermes Desktop 插件。该插件固定显示在整个 composer 下方、输入框外部，不支持拖动。
+重新加载 Hermes Desktop 插件。该插件固定显示在窗口左下方的状态栏，不影响输入框或侧边栏，不支持拖动。
 
 ### DeepSeek Harness
 
@@ -48,7 +48,7 @@ Harness 官方客户端插件需要在 Harness 源码检出目录中构建。将
 
 具体步骤参见 `adapters/harness/README.md`。
 
-对于已经安装的 DSH profile，应使用 DSH 官方 profile 插件命令安装此包。包内的 `dsh.bundle` 元数据会自动注册 `deepseek-time` Loader 条目，不需要手动修改 profile 的 `cordis.patch.yml`。
+对于已经安装的 DSH profile，应使用 DSH 官方 profile 插件命令安装此包。包内的 `dsh.bundle` 元数据会自动注册 `deepseek-time` Loader 条目，不需要手动修改 profile 的 `cordis.patch.yml`。请保留生成的 `lib/index.js`，它是 DSH 启动时加载此纯 Web 客户端包所需的无操作宿主入口。
 
 下次启动 DSH 时会自动扫描并加载该客户端 bundle。
 
