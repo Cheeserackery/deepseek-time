@@ -7,7 +7,7 @@ The supplied SVG is the source icon. The display uses its original blue in idle 
 ## Layout
 
 - `packages/core/`: one tested source of truth for pricing-period state and color.
-- `adapters/harness/`: DeepSeek Harness Web-client source using its native composer dock slot.
+- `adapters/harness/`: DeepSeek Harness Web-client source using its native input dock slot above the composer.
 - `adapters/hermes/`: Hermes Desktop disk plugin using its native left status-bar contribution.
 - `adapters/codex/deepseek-time/`: Codex plugin with a local MCP App status card that requests picture-in-picture presentation.
 
@@ -26,7 +26,7 @@ Hermes: run `npm run build`, then copy only `adapters/hermes/plugin.js` to `$HER
 
 DeepSeek Harness: see `adapters/harness/README.md`. Its preview client-plugin protocol requires the adapter to be built in a Harness source checkout.
 
-Codex: install the packaged plugin through a personal marketplace, then invoke `show_deepseek_time`. Its MCP App requests picture-in-picture; hosts that do not provide this mode retain the same live status card inline.
+Codex: add this repository as a marketplace, install `deepseek-time@deepseek-time`, then invoke `show_deepseek_time` in a new task. Its MCP App requests picture-in-picture; hosts that do not provide this mode retain the same live status card inline.
 
 ## GitHub Distribution
 

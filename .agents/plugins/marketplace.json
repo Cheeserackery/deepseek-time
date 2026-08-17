@@ -1,0 +1,20 @@
+{
+  "name": "deepseek-time",
+  "interface": {
+    "displayName": "DeepSeek Time"
+  },
+  "plugins": [
+    {
+      "name": "deepseek-time",
+      "source": {
+        "source": "local",
+        "path": "./adapters/codex/deepseek-time"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

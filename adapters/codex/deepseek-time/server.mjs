@@ -35,6 +35,7 @@ function widgetDocument() {
     time.style.color = state.color;
     time.textContent = state.remainingText;
     status.setAttribute('aria-label', state.label + '，剩余 ' + state.remainingText);
+    status.title = state.label;
     setTimeout(render, 1000 - (Date.now() % 1000));
   }
   render();
@@ -47,7 +48,7 @@ function toolResult() {
   return {
     content: [{ type: 'text', text: `${state.label}，剩余 ${state.remainingText}` }],
     structuredContent: state,
-    _meta: { ui: { resourceUri: WIDGET_URI } },
+    _meta: { 'openai/outputTemplate': WIDGET_URI },
   }
 }
 
@@ -76,7 +77,7 @@ async function handle(message) {
         description: 'Show the current DeepSeek pricing period and its remaining time in Beijing time.',
         inputSchema: { type: 'object', properties: {}, additionalProperties: false },
         annotations: { readOnlyHint: true },
-        _meta: { ui: { resourceUri: WIDGET_URI } },
+        _meta: { 'openai/outputTemplate': WIDGET_URI },
       }],
     })
   }
@@ -89,7 +90,15 @@ async function handle(message) {
   }
   if (method === 'resources/read') {
     if (params.uri !== WIDGET_URI) return failure(id, -32602, 'Unknown resource')
-    return response(id, { contents: [{ uri: WIDGET_URI, mimeType: 'text/html;profile=mcp-app', text: widgetDocument() }] })
+    return response(id, { contents: [{
+      uri: WIDGET_URI,
+      mimeType: 'text/html;profile=mcp-app',
+      text: widgetDocument(),
+      _meta: {
+        'openai/widgetDescription': 'A live DeepSeek pricing-period countdown.',
+        'openai/widgetPrefersBorder': false,
+      },
+    }] })
   }
   return failure(id, -32601, 'Method not found')
 }

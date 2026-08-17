@@ -27,6 +27,7 @@ function DeepSeekTimeWidget(): React.ReactElement {
   return (
     <aside
       aria-label={`${state.label}，剩余 ${state.remainingText}`}
+      title={state.label}
       style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 4, padding: '4px 0', width: 48 }}
     >
       <svg aria-hidden="true" fill="none" height="30" viewBox="0 0 50 50" width="30">
@@ -40,8 +41,8 @@ function DeepSeekTimeWidget(): React.ReactElement {
 }
 
 export function apply(ctx: ClientContext): void {
-  ctx.slots.inject('conversation.composer.dock', () => ctx.slots.register({
-    name: 'conversation.composer.dock',
+  ctx.slots.inject('conversation.input.dock', () => ctx.slots.register({
+    name: 'conversation.input.dock',
     id: 'deepseek-time',
     order: 20,
   }, DeepSeekTimeWidget))

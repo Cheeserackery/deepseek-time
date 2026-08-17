@@ -23,6 +23,7 @@ function DeepSeekTimeWidget() {
   return jsxs('div', {
     role: 'status',
     'aria-label': `${state.label}: ${state.remainingText}`,
+    title: state.label,
     className: 'flex h-5 items-center gap-1.5 px-1',
     children: [
       jsx('svg', {

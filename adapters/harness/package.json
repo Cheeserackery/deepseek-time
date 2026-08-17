@@ -1,7 +1,7 @@
 {
   "name": "deepseek-time",
   "description": "Show DeepSeek pricing-period status in the Harness composer.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "main": "lib/index.js",

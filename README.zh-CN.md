@@ -12,7 +12,7 @@ DeepSeek Time 是一个固定位置的状态指示器，用于显示 DeepSeek �
 ## 项目结构
 
 - `packages/core/`：共享的时间规则、倒计时格式化和颜色状态逻辑。
-- `adapters/harness/`：DeepSeek Harness Web 客户端插件，使用原生 `conversation.composer.dock` 插槽。
+- `adapters/harness/`：DeepSeek Harness Web 客户端插件，使用原生 `conversation.input.dock` 插槽，显示在输入框上方。
 - `adapters/hermes/`：Hermes Desktop 磁盘插件，使用原生左侧状态栏插槽。
 - `adapters/codex/deepseek-time/`：Codex 插件，提供 MCP App 状态卡并请求画中画展示。
 - `tests/`：共享核心的时段边界和倒计时测试。
@@ -44,7 +44,7 @@ $HERMES_HOME/desktop-plugins/deepseek-time/plugin.js
 
 ### DeepSeek Harness
 
-Harness 官方客户端插件需要在 Harness 源码检出目录中构建。将 `adapters/harness/` 作为本地客户端包加入工作区，并在 Web profile 的 `cordis.yml` 中注册，然后构建客户端 bundle。
+Harness 官方客户端插件需要在 Harness 源码检出目录中构建。将 `adapters/harness/` 作为本地客户端包加入工作区，并在 Web profile 的 `cordis.yml` 中注册，然后构建客户端 bundle。图标位于文字输入框上方，不改变输入框高度。
 
 具体步骤参见 `adapters/harness/README.md`。
 
@@ -54,7 +54,7 @@ Harness 官方客户端插件需要在 Harness 源码检出目录中构建。将
 
 ### Codex
 
-通过个人 marketplace 安装 `adapters/codex/deepseek-time/` 插件。安装后调用 MCP 工具 `show_deepseek_time`，即可显示实时状态。
+将本仓库作为 marketplace 添加到 Codex，安装 `deepseek-time@deepseek-time`，然后在新任务中调用 MCP 工具 `show_deepseek_time`，即可显示实时状态。
 
 Codex UI 会请求画中画模式，使状态在继续对话时保持可见。画中画需要宿主支持；不支持的宿主会回退为对话内状态卡。该插件不是应用启动时自动注入的全局悬浮层，必须由工具调用创建状态卡。
 
