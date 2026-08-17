@@ -1,0 +1,19 @@
+{
+  "name": "deepseek-time",
+  "version": "0.1.0",
+  "description": "Show DeepSeek peak and idle pricing periods in Codex.",
+  "author": {
+    "name": "DeepSeek Time"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "DeepSeek Time",
+    "shortDescription": "Display DeepSeek pricing-period status.",
+    "longDescription": "DeepSeek Time shows a live Beijing-time countdown to DeepSeek's next pricing-period boundary.",
+    "developerName": "DeepSeek Time",
+    "category": "Productivity",
+    "capabilities": ["Read"],
+    "defaultPrompt": "Show the current DeepSeek pricing-period status."
+  },
+  "mcpServers": "./.mcp.json"
+}
