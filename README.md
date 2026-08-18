@@ -13,6 +13,13 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 
 DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
+<img width="1190" height="794" alt="DSH" src="https://github.com/user-attachments/assets/6dbd65bf-f205-4981-a2b6-06431e58967c" />
+
+<img width="1190" height="794" alt="DSH" src="https://github.com/user-attachments/assets/7556c39a-0b79-4f56-972f-8b2c2c19ab10" />
+
+<img width="1037" height="516" alt="CODEX" src="https://github.com/user-attachments/assets/fac32c43-0d9e-47ad-b1aa-d8c0702f048b" />
+
+
 ## 三端适配器
 
 三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：
