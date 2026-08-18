@@ -12,7 +12,7 @@ DeepSeek Time 是一个固定位置的状态指示器，用于显示 DeepSeek �
 ## 项目结构
 
 - `packages/core/`：共享的时间规则、倒计时格式化和颜色状态逻辑。
-- `adapters/harness/`：DeepSeek Harness Web 客户端插件，使用原生 `conversation.input.dock` 插槽，显示在输入框上方。
+- `adapters/harness/`：DeepSeek Harness Web 客户端插件，使用原生 `conversation.input.dock` 插槽，并固定显示在侧边栏外侧底部，不影响输入框布局。
 - `adapters/hermes/`：Hermes Desktop 磁盘插件，使用原生左侧状态栏插槽。
 - `adapters/codex/deepseek-time/`：Codex 插件，提供 MCP App 状态卡并请求画中画展示。
 - `tests/`：共享核心的时段边界和倒计时测试。

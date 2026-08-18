@@ -22,13 +22,36 @@ window.__ModuleLoader__.load({
       return now
     }
 
+    function useSidebarDockLeft() {
+      const [left, setLeft] = useState()
+      useEffect(() => {
+        const frame = document.querySelector('[style*="grid-template-columns"]')
+        if (frame === null) return
+        const update = () => {
+          const sidebarWidth = Number.parseFloat(getComputedStyle(frame).gridTemplateColumns)
+          if (!Number.isFinite(sidebarWidth)) return
+          setLeft(frame.getBoundingClientRect().left + sidebarWidth + 6)
+        }
+        update()
+        const observer = new ResizeObserver(update)
+        observer.observe(frame)
+        window.addEventListener('resize', update)
+        return () => {
+          observer.disconnect()
+          window.removeEventListener('resize', update)
+        }
+      }, [])
+      return left
+    }
+
     function DeepSeekTimeWidget() {
       const state = getDeepSeekTimeState(useClock())
+      const left = useSidebarDockLeft()
       return jsxs('aside', {
         role: 'status',
         'aria-label': `${state.label}: ${state.remainingText}`,
         title: state.label,
-        style: { alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 4, padding: '4px 0', transform: 'translateY(22px)', width: 48 },
+        style: { alignItems: 'center', bottom: 100, display: 'flex', flexDirection: 'column', gap: 4, left: left ?? 0, padding: '4px 0', position: 'fixed', visibility: left === undefined ? 'hidden' : 'visible', width: 48, zIndex: 8 },
         children: [
           jsx('svg', { 'aria-hidden': true, fill: 'none', height: 30, viewBox: '0 0 50 50', width: 30, children: jsx('path', { d: DEEPSEEK_MARK_PATH, fill: state.color }) }),
           jsx('span', { style: { color: state.color, fontSize: 11, fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' }, children: state.remainingText }),

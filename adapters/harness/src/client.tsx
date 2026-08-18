@@ -22,13 +22,38 @@ function useClock(): number {
   return now
 }
 
+function useSidebarDockLeft(): number | undefined {
+  const [left, setLeft] = useState<number>()
+  useEffect(() => {
+    const frame = document.querySelector<HTMLElement>('[style*="grid-template-columns"]')
+    if (frame === null) return
+
+    const update = (): void => {
+      const sidebarWidth = Number.parseFloat(getComputedStyle(frame).gridTemplateColumns)
+      if (!Number.isFinite(sidebarWidth)) return
+      setLeft(frame.getBoundingClientRect().left + sidebarWidth + 6)
+    }
+
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(frame)
+    window.addEventListener('resize', update)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+  return left
+}
+
 function DeepSeekTimeWidget(): React.ReactElement {
   const state = getDeepSeekTimeState(useClock())
+  const left = useSidebarDockLeft()
   return (
     <aside
       aria-label={`${state.label}，剩余 ${state.remainingText}`}
       title={state.label}
-      style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 4, padding: '4px 0', transform: 'translateY(22px)', width: 48 }}
+      style={{ alignItems: 'center', bottom: 100, display: 'flex', flexDirection: 'column', gap: 4, left: left ?? 0, padding: '4px 0', position: 'fixed', visibility: left === undefined ? 'hidden' : 'visible', width: 48, zIndex: 8 }}
     >
       <svg aria-hidden="true" fill="none" height="30" viewBox="0 0 50 50" width="30">
         <path d={DEEPSEEK_MARK_PATH} fill={state.color} />

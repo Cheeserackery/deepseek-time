@@ -1,6 +1,6 @@
 # DeepSeek Harness Adapter
 
-This is a DeepSeek Harness Web client plugin. It registers in the native `conversation.input.dock` slot, placing the status display above the conversation input without changing the input height.
+This is a DeepSeek Harness Web client plugin. It registers in the native `conversation.input.dock` slot, then positions the status display at the bottom edge of the sidebar so it does not affect the conversation input layout or follow the centered new-session composer.
 
 Harness currently requires client plugins to be built within a source checkout. Copy this adapter into the Harness workspace as a local client package, add it to the workspace and to the Web profile's `cordis.yml`, then build the client bundle so `./lib/client.js` exists. The package metadata declares the `dsh.client` entry required by the Harness client-module loader.
 

@@ -7,7 +7,7 @@ The supplied SVG is the source icon. The display uses its original blue in idle 
 ## Layout
 
 - `packages/core/`: one tested source of truth for pricing-period state and color.
-- `adapters/harness/`: DeepSeek Harness Web-client source using its native input dock slot above the composer.
+- `adapters/harness/`: DeepSeek Harness Web-client source using its native input dock slot with a fixed sidebar-edge status position.
 - `adapters/hermes/`: Hermes Desktop disk plugin using its native left status-bar contribution.
 - `adapters/codex/deepseek-time/`: Codex plugin with a local MCP App status card that requests picture-in-picture presentation.
 
