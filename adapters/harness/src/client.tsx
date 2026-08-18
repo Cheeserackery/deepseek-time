@@ -28,7 +28,7 @@ function DeepSeekTimeWidget(): React.ReactElement {
     <aside
       aria-label={`${state.label}，剩余 ${state.remainingText}`}
       title={state.label}
-      style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 4, padding: '4px 0', width: 48 }}
+      style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 4, padding: '4px 0', transform: 'translateY(22px)', width: 48 }}
     >
       <svg aria-hidden="true" fill="none" height="30" viewBox="0 0 50 50" width="30">
         <path d={DEEPSEEK_MARK_PATH} fill={state.color} />
