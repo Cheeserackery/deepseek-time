@@ -13,9 +13,9 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 
 DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
-<img width="1190" height="794" alt="DSH" src="https://github.com/user-attachments/assets/6dbd65bf-f205-4981-a2b6-06431e58967c" />
+<img width="1190" height="794" alt="DSH" src="https://github.com/user-attachments/assets/5dd69ba8-718e-4d71-8096-58a6e7bc8412" />
 
-<img width="1190" height="794" alt="DSH" src="https://github.com/user-attachments/assets/7556c39a-0b79-4f56-972f-8b2c2c19ab10" />
+<img width="1190" height="794" alt="HERMES" src="https://github.com/user-attachments/assets/e2a5ccae-a35a-4e52-bef2-625bb531e875" />
 
 <img width="1037" height="516" alt="CODEX" src="https://github.com/user-attachments/assets/fac32c43-0d9e-47ad-b1aa-d8c0702f048b" />
 
