@@ -4,7 +4,7 @@
 
 DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序始终使用北京时间（`Asia/Shanghai`），在空闲时段显示蓝色图标，在高峰时段显示红色图标，并实时倒计时到下一个时段边界。
 
-适用于DeepSeek Harness、Hermes、Codex。（但Codex端无法实现常驻显示，不推荐使用）
+适用于DeepSeek Harness、Hermes、Codex。（但Codex端无法实现常驻显示，故不推荐在Codex中使用）
 
 当前规则：
 
