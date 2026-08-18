@@ -26,21 +26,35 @@ function useSidebarDockLeft(): number | undefined {
   const [left, setLeft] = useState<number>()
   useEffect(() => {
     const frame = document.querySelector<HTMLElement>('[style*="grid-template-columns"]')
-    if (frame === null) return
+    const sidebar = frame?.firstElementChild
+    if (frame === null || !(sidebar instanceof HTMLElement)) return
+
+    let animationFrame: number | undefined
 
     const update = (): void => {
-      const sidebarWidth = Number.parseFloat(getComputedStyle(frame).gridTemplateColumns)
-      if (!Number.isFinite(sidebarWidth)) return
-      setLeft(frame.getBoundingClientRect().left + sidebarWidth + 6)
+      if (animationFrame !== undefined) return
+      animationFrame = requestAnimationFrame(() => {
+        animationFrame = undefined
+        const nextLeft = Math.round(sidebar.getBoundingClientRect().right + 6)
+        if (!Number.isFinite(nextLeft)) return
+        setLeft((current) => current === nextLeft ? current : nextLeft)
+      })
     }
 
     update()
-    const observer = new ResizeObserver(update)
-    observer.observe(frame)
+    const resizeObserver = new ResizeObserver(update)
+    resizeObserver.observe(sidebar)
+    resizeObserver.observe(frame)
+    const mutationObserver = new MutationObserver(update)
+    mutationObserver.observe(frame, { attributes: true, attributeFilter: ['class', 'style'] })
     window.addEventListener('resize', update)
+    window.visualViewport?.addEventListener('resize', update)
     return () => {
-      observer.disconnect()
+      if (animationFrame !== undefined) cancelAnimationFrame(animationFrame)
+      resizeObserver.disconnect()
+      mutationObserver.disconnect()
       window.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('resize', update)
     }
   }, [])
   return left
