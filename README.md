@@ -1,37 +1,39 @@
 # DeepSeek Time
 
-DeepSeek Time is an open-source status indicator for DeepSeek's published pricing periods. It evaluates Beijing time (`Asia/Shanghai`), switches the DeepSeek mark between idle blue and peak red, and shows a live countdown to the next boundary.
+[中文](README.md) | [English](README.en.md)
 
-Pricing periods currently implemented:
+DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序始终使用北京时间（`Asia/Shanghai`），在空闲时段显示蓝色图标，在高峰时段显示红色图标，并实时倒计时到下一个时段边界。
 
-- Peak: `09:00-12:00` and `14:00-18:00`
-- Idle: all other times
+当前规则：
 
-Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/quick_start/pricing>.
+- 高峰时段：`09:00-12:00`、`14:00-18:00`
+- 空闲时段：其余时间
 
-## Supported Adapters
+DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/quick_start/pricing>。
 
-The adapters share the tested core in `packages/core/`, but each host has its own package format and installation path.
+## 三端适配器
 
-- `adapters/hermes/`: Hermes Desktop self-contained disk plugin. It appears in the native left status bar and does not affect the composer.
-- `adapters/dsh/`: DeepSeek Harness (DSH) Web client package. It uses the native conversation dock and fixes the indicator outside the sidebar near the bottom, following sidebar resize and collapse changes.
-- `adapters/codex/deepseek-time/`: Codex plugin with the `show_deepseek_time` MCP tool and live status card. Picture-in-picture depends on Codex host support.
+三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：
 
-## Build And Verify
+- `adapters/hermes/`：Hermes Desktop 单文件磁盘插件，显示在原生左侧状态栏，不影响输入框。
+- `adapters/dsh/`：DeepSeek Harness（DSH）Web 客户端包，使用原生会话输入插槽，图标固定在侧边栏外侧靠近底部，并跟随侧栏缩放和收起更新。
+- `adapters/codex/deepseek-time/`：Codex 插件，提供 `show_deepseek_time` MCP 工具和实时状态卡；画中画是否显示由 Codex 宿主决定。
 
-Requirements: Node.js 20 or newer and npm. Hermes and DSH installation may additionally require their own supported package manager.
+## 构建与验证
+
+要求 Node.js 20 或更高版本和 npm；Hermes、DSH 安装还需要各自支持的包管理器。
 
 ```powershell
 npm run build
 npm run verify
 ```
 
-`npm run build` stages generated shared modules, the SVG path, the Hermes single-file plugin, and the DSH client bundle. Do not edit generated files under adapter `lib/` or staged `src/` files by hand; edit the source templates and shared core, then rebuild.
+`npm run build` 会生成共享模块、图标路径、Hermes 单文件插件和 DSH 客户端包。不要手动编辑适配器 `lib/` 或生成的 `src/` 文件；修改源模板或共享核心后重新构建。
 
-## Install Hermes Desktop
+## 安装 Hermes Desktop
 
-1. Clone this repository and run `npm run build`.
-2. Copy `adapters/hermes/plugin.js` to Hermes' desktop plugin directory as `deepseek-time/plugin.js`.
+1. 克隆仓库并运行 `npm run build`。
+2. 将 `adapters/hermes/plugin.js` 复制为 Hermes 桌面插件目录中的 `deepseek-time/plugin.js`：
 
 ```powershell
 $pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
@@ -39,56 +41,56 @@ New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $pluginDir 'plugin.js') -Force
 ```
 
-3. Reload Hermes Desktop plugins or restart Hermes. If `HERMES_HOME` is not set, use the directory documented by your Hermes installation.
+3. 重新加载 Hermes 插件或重启 Hermes。如果没有设置 `HERMES_HOME`，请使用 Hermes 安装文档指定的插件目录。
 
-To update, rebuild and copy the file again. To uninstall, remove the `deepseek-time` directory and reload Hermes. This is a local disk plugin, so it may not appear in Hermes' searchable marketplace list.
+更新时重新构建并覆盖 `plugin.js`，再重新加载 Hermes。卸载时删除 `deepseek-time` 目录并重新加载。因为这是本地磁盘插件，所以可能不会出现在 Hermes 的可搜索 marketplace 列表中。
 
-## Install DeepSeek Harness (DSH)
+## 安装 DeepSeek Harness（DSH）
 
-1. Clone this repository and run `npm run build`.
-2. From the DSH Web profile directory, add the local DSH package. Replace `<clone-path>` with the absolute path of this checkout:
+1. 克隆仓库并运行 `npm run build`。
+2. 在 DSH Web profile 目录执行以下命令，将 `<仓库路径>` 替换为实际克隆路径：
 
 ```powershell
-pnpm add "file:<clone-path>\adapters\dsh"
+pnpm add "file:<仓库路径>\adapters\dsh"
 pnpm install
 ```
 
-3. Confirm the profile bundle list contains `deepseek-time`, then restart DSH. The package's `dsh.client` and `dsh.bundle` metadata provide the client and Loader registration.
+3. 确认 profile 的 `dsh.profile.bundles` 包含 `deepseek-time`，然后重启 DSH。包内的 `dsh.client` 和 `dsh.bundle` 元数据会提供客户端和 Loader 注册。
 
-For updates, run `npm run build`, repeat the local `pnpm add`/`pnpm install` steps, and restart DSH. Keep `adapters/dsh/lib/index.js`, the package root export, `main`, and `cordis.patch.yml`; these are required for safe DSH startup. For removal, run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH.
+更新时重新运行 `npm run build`，重复上述安装命令并重启 DSH。必须保留 `adapters/dsh/lib/index.js`、包根导出、`main` 和 `cordis.patch.yml`，它们用于保证 DSH 安全加载。卸载时执行 `pnpm remove deepseek-time`、`pnpm install`，再重启 DSH。
 
-The DSH adapter requires the host's native `conversation.input.dock` slot. It does not patch DSH source code or inject global CSS.
+DSH 适配器要求宿主提供原生 `conversation.input.dock` 插槽，不会修改 DSH 源码或注入全局 CSS。
 
-## Install Codex
+## 安装 Codex
 
-This repository includes a local marketplace at `.agents/plugins/marketplace.json`.
+仓库包含本地 marketplace：`.agents/plugins/marketplace.json`。从仓库根目录执行：
 
 ```powershell
-codex plugin marketplace add '<clone-path>'
+codex plugin marketplace add '<仓库路径>'
 codex plugin add deepseek-time@deepseek-time
 ```
 
-Start a new Codex task after installation and call `show_deepseek_time`. Updates should be reinstalled from the same marketplace and tested in a new task. Remove the plugin with the removal command supported by your Codex version, or disable/remove this local marketplace in Codex settings.
+安装后新建 Codex 任务并调用 `show_deepseek_time`。更新时从同一个本地 marketplace 重新安装，并新建任务测试；卸载时使用当前 Codex 版本支持的移除命令，或在 Codex 设置中禁用/移除该 marketplace。
 
-Codex controls MCP App presentation. The plugin requests picture-in-picture, but a host without that capability may show the live card inline. Codex does not provide the Hermes/DSH-style permanent global UI slot, so this adapter is tool-triggered rather than an always-on overlay.
+Codex 宿主决定 MCP App 是否获得画中画展示。插件会请求画中画，但不支持的宿主可能以内嵌状态卡显示。Codex 没有 Hermes/DSH 那样的永久全局 UI 插槽，因此该适配器由工具调用触发，不是应用启动时自动悬浮。
 
-## Troubleshooting
+## 故障排查
 
-- If an adapter is missing after a source change, run `npm run build` before reinstalling it.
-- If DSH fails to start, restore the package's `main`, root export, `lib/index.js`, and `dsh.bundle` metadata; do not add a client-only bundle without its no-op host entry.
-- If a plugin cannot be found in an in-app search list, use the documented local installation method. Local disk plugins and local marketplaces are not automatically published to a product's official catalog.
-- All adapters use the same shared time rules and should be checked against the official pricing page when DeepSeek changes its policy.
+- 源码修改后插件不更新：先运行 `npm run build`，再重新安装对应适配器。
+- DSH 启动失败：检查 `main`、根导出、`lib/index.js` 和 `dsh.bundle` 是否完整；纯客户端包不能省略空宿主入口。
+- 应用内搜索不到插件：按照本 README 的本地安装方式操作。放到 GitHub 或本地 marketplace 不会自动加入产品官方插件目录。
+- DeepSeek 调整定价规则后：以官方页面为准，并同步更新共享核心及测试。
 
-## Development
+## 开发
 
-The shared implementation lives in `packages/core/src/time-state.mjs`. Tests cover boundary transitions and countdown formatting:
+共享逻辑位于 `packages/core/src/time-state.mjs`，边界和倒计时测试位于 `tests/`：
 
 ```powershell
 npm run verify
 ```
 
-Pull requests should include regenerated adapter output and should not include secrets, machine-specific profile paths, or installed-product directories.
+提交代码时应包含重新生成的适配器产物，不要提交密钥、机器专属 profile 路径或已安装产品目录。
 
-## License
+## 开源协议
 
-DeepSeek Time is released under the MIT License. See [LICENSE](LICENSE).
+本项目采用 MIT 开源协议，详见根目录 [LICENSE](LICENSE)。
