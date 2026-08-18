@@ -13,6 +13,9 @@ Pricing periods currently implemented:
 
 Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>.
 
+<img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/b773d0f1-cfe9-4ae3-8245-88380d081ab1" />
+
+
 ## Supported Adapters
 
 The adapters share the tested core in `packages/core/`, but each host has its own package format and installation path.
