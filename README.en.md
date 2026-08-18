@@ -9,7 +9,7 @@ Pricing periods currently implemented:
 - Peak: `09:00-12:00` and `14:00-18:00`
 - Idle: all other times
 
-Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/quick_start/pricing>.
+Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>.
 
 ## Supported Adapters
 
