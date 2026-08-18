@@ -9,7 +9,7 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 - 高峰时段：`09:00-12:00`、`14:00-18:00`
 - 空闲时段：其余时间
 
-DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/quick_start/pricing>。
+DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
 ## 三端适配器
 
