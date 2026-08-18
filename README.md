@@ -13,7 +13,7 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 
 DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
-<img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/a33a5293-f005-4f08-b2e7-13d715c4e016" />
+<img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/0bf1417f-f5de-491b-8a40-e148beca165d" />
 
 ## 三端适配器
 
