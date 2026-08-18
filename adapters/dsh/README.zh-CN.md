@@ -22,15 +22,27 @@ pnpm add "file:<仓库路径>\adapters\dsh"
 pnpm install
 ```
 
-profile 的 `dsh.profile.bundles` 必须包含 `deepseek-time`。包内的 `dsh.bundle` 和 `dsh.client` 元数据会提供所需注册，不要删除包根导出、`main`、`lib/index.js` 或 `cordis.patch.yml`。安装或更新后重启 DSH。
+编辑 DSH Web profile 目录下的 `package.json`，在已有的 `dsh.profile.bundles` 数组中加入一次 `deepseek-time`，保留其他 bundle。`pnpm add` 只会添加依赖，不会自动选择 bundle。包内的 `dsh.bundle` 和 `dsh.client` 元数据会提供所需注册，不要删除包根导出、`main`、`lib/index.js` 或 `cordis.patch.yml`。编辑后运行 `pnpm install`，再重启 DSH。
 
-已有安装更新时，先在仓库根目录运行 `npm run build`，再重复上述 `pnpm add` 和 `pnpm install`，最后重启 DSH。如果插件不显示，请确认 profile 依赖指向本目录且 `lib/client.js` 已生成。
+相关结构应类似下面这样：
+
+```json
+{
+  "dsh": { "profile": { "bundles": ["已有 bundle", "deepseek-time"] } },
+  "dependencies": { "deepseek-time": "file:<仓库路径>/adapters/dsh" }
+}
+```
+
+请将条目合并到现有对象中，不要覆盖 profile 的其他 bundle 或依赖。
+
+从旧版本升级时，先把 profile 依赖路径中的 `adapters/harness` 改为 `adapters/dsh`，不要保留旧路径，再运行 `pnpm install`。已有安装更新时，先在仓库根目录运行 `npm run build`，再重复上述 `pnpm add` 和 `pnpm install`，确认 bundle 列表后重启 DSH。如果插件不显示，请确认 profile 依赖指向本目录且 `lib/client.js` 已生成。
 
 ## 卸载
 
 在 DSH Web profile 目录执行：
 
 ```powershell
+# 先从 package.json 的 dsh.profile.bundles 中删除 "deepseek-time"。
 pnpm remove deepseek-time
 pnpm install
 ```

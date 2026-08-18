@@ -22,15 +22,27 @@ pnpm add "file:<clone-path>\adapters\dsh"
 pnpm install
 ```
 
-The profile must include `deepseek-time` in its `dsh.profile.bundles` list. The package metadata supplies the `dsh.bundle` patch and the `dsh.client` entry; do not remove the package root export, `main`, `lib/index.js`, or `cordis.patch.yml`. Restart DSH after installation or update.
+Edit the DSH Web profile's `package.json` and add `deepseek-time` once to the existing `dsh.profile.bundles` list. `pnpm add` adds the dependency but does not select the bundle automatically. The package metadata supplies the `dsh.bundle` patch and the `dsh.client` entry; do not remove the package root export, `main`, `lib/index.js`, or `cordis.patch.yml`. Run `pnpm install` after the edit, then restart DSH.
 
-For an existing installation, rebuild this repository, run the same `pnpm add` command again, then restart DSH. If the plugin is not visible, check that the profile dependency points to this adapter directory and that the generated `lib/client.js` exists.
+The relevant structure is:
+
+```json
+{
+  "dsh": { "profile": { "bundles": ["existing bundle", "deepseek-time"] } },
+  "dependencies": { "deepseek-time": "file:<clone-path>/adapters/dsh" }
+}
+```
+
+Add these entries to the existing object; do not replace the profile's other bundles or dependencies.
+
+When migrating from an older release, change the profile dependency path from `adapters/harness` to `adapters/dsh` before running `pnpm install`. For an existing installation, rebuild this repository, run the same `pnpm add` command again, confirm the bundle list, and restart DSH. If the plugin is not visible, check that the profile dependency points to this adapter directory and that the generated `lib/client.js` exists.
 
 ## Remove
 
 From the DSH Web profile directory:
 
 ```powershell
+# First remove "deepseek-time" from dsh.profile.bundles in package.json.
 pnpm remove deepseek-time
 pnpm install
 ```

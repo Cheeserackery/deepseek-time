@@ -36,6 +36,8 @@ npm run verify
 2. Copy `adapters/hermes/plugin.js` to Hermes' desktop plugin directory as `deepseek-time/plugin.js`.
 
 ```powershell
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw 'Set HERMES_HOME or use the plugin directory documented by Hermes.' }
 $pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $pluginDir 'plugin.js') -Force
@@ -55,9 +57,20 @@ pnpm add "file:<clone-path>\adapters\dsh"
 pnpm install
 ```
 
-3. Confirm the profile bundle list contains `deepseek-time`, then restart DSH. The package's `dsh.client` and `dsh.bundle` metadata provide the client and Loader registration.
+3. Edit the DSH Web profile's `package.json` and add `deepseek-time` once to the existing `dsh.profile.bundles` array, preserving all other bundles. `pnpm add` adds the dependency but does not select the DSH bundle automatically. Confirm both the dependency and bundle entry exist, run `pnpm install`, and restart DSH. The package's `dsh.client` and `dsh.bundle` metadata provide the client and Loader registration.
 
-For updates, run `npm run build`, repeat the local `pnpm add`/`pnpm install` steps, and restart DSH. Keep `adapters/dsh/lib/index.js`, the package root export, `main`, and `cordis.patch.yml`; these are required for safe DSH startup. For removal, run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH.
+The structure should look like this; add the entries without replacing the profile's existing content:
+
+```json
+{
+  "dsh": { "profile": { "bundles": ["existing bundle", "deepseek-time"] } },
+  "dependencies": { "deepseek-time": "file:<clone-path>/adapters/dsh" }
+}
+```
+
+When upgrading from an older release, change the profile dependency path from `adapters/harness` to `adapters/dsh` before running `pnpm install`; do not keep the old path. For updates, run `npm run build`, repeat the local `pnpm add`/`pnpm install` steps, and restart DSH. Keep `adapters/dsh/lib/index.js`, the package root export, `main`, and `cordis.patch.yml`; these are required for safe DSH startup.
+
+To remove the adapter, first delete `deepseek-time` from the `dsh.profile.bundles` array, then run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH. Do not leave a bundle entry pointing to an uninstalled package.
 
 The DSH adapter requires the host's native `conversation.input.dock` slot. It does not patch DSH source code or inject global CSS.
 

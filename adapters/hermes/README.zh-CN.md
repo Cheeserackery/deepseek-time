@@ -14,6 +14,8 @@ npm run verify
 将生成的文件复制到 Hermes 桌面插件目录：
 
 ```powershell
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw '请先设置 HERMES_HOME，或使用 Hermes 文档指定的插件目录。' }
 $pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $pluginDir 'plugin.js') -Force
@@ -26,7 +28,10 @@ Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $plug
 更新时重新运行构建并覆盖 `plugin.js`，然后重新加载 Hermes。卸载时删除插件目录并重新加载：
 
 ```powershell
-Remove-Item -LiteralPath (Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time') -Recurse -Force
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw '卸载前请先设置 HERMES_HOME。' }
+$pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
+if (Test-Path -LiteralPath $pluginDir) { Remove-Item -LiteralPath $pluginDir -Recurse -Force }
 ```
 
 该插件是本地磁盘插件，可能不会出现在 Hermes 可搜索的 marketplace 列表中；通过桌面插件目录中的文件控制安装和卸载。

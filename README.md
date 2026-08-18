@@ -36,6 +36,8 @@ npm run verify
 2. 将 `adapters/hermes/plugin.js` 复制为 Hermes 桌面插件目录中的 `deepseek-time/plugin.js`：
 
 ```powershell
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw '请先设置 HERMES_HOME，或使用 Hermes 文档指定的插件目录。' }
 $pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $pluginDir 'plugin.js') -Force
@@ -55,9 +57,20 @@ pnpm add "file:<仓库路径>\adapters\dsh"
 pnpm install
 ```
 
-3. 确认 profile 的 `dsh.profile.bundles` 包含 `deepseek-time`，然后重启 DSH。包内的 `dsh.client` 和 `dsh.bundle` 元数据会提供客户端和 Loader 注册。
+3. 编辑 DSH Web profile 目录下的 `package.json`，在现有 `dsh.profile.bundles` 数组中加入一次 `deepseek-time`，并保留数组中的其他 bundle。`pnpm add` 只会添加依赖，不会自动把 bundle 加入该数组。确认依赖和 bundle 同时存在后，再运行 `pnpm install` 并重启 DSH。包内的 `dsh.client` 和 `dsh.bundle` 元数据会提供客户端和 Loader 注册。
 
-更新时重新运行 `npm run build`，重复上述安装命令并重启 DSH。必须保留 `adapters/dsh/lib/index.js`、包根导出、`main` 和 `cordis.patch.yml`，它们用于保证 DSH 安全加载。卸载时执行 `pnpm remove deepseek-time`、`pnpm install`，再重启 DSH。
+配置结构应类似下面这样；只添加条目，不要覆盖 profile 原有内容：
+
+```json
+{
+  "dsh": { "profile": { "bundles": ["已有 bundle", "deepseek-time"] } },
+  "dependencies": { "deepseek-time": "file:<仓库路径>/adapters/dsh" }
+}
+```
+
+从旧版本升级时，将 profile `package.json` 中依赖值里的 `adapters/harness` 改为 `adapters/dsh`，不要保留旧路径，然后运行 `pnpm install`。更新时重新运行 `npm run build`，重复上述安装命令并重启 DSH。必须保留 `adapters/dsh/lib/index.js`、包根导出、`main` 和 `cordis.patch.yml`，它们用于保证 DSH 安全加载。
+
+卸载时先从 `dsh.profile.bundles` 数组删除 `deepseek-time`，再执行 `pnpm remove deepseek-time` 和 `pnpm install`，最后重启 DSH；不要留下指向已删除包的 bundle 条目。
 
 DSH 适配器要求宿主提供原生 `conversation.input.dock` 插槽，不会修改 DSH 源码或注入全局 CSS。
 

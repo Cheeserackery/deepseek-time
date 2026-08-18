@@ -14,6 +14,8 @@ npm run verify
 Copy the generated file to Hermes' desktop plugin directory:
 
 ```powershell
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw 'Set HERMES_HOME or use the plugin directory documented by Hermes.' }
 $pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
 New-Item -ItemType Directory -Force $pluginDir | Out-Null
 Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $pluginDir 'plugin.js') -Force
@@ -26,7 +28,10 @@ Reload Hermes Desktop plugins or restart Hermes. If `HERMES_HOME` is not set, us
 To update, rebuild and copy `plugin.js` again, then reload Hermes. To remove it, delete the `deepseek-time` plugin directory and reload Hermes:
 
 ```powershell
-Remove-Item -LiteralPath (Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time') -Recurse -Force
+$ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($env:HERMES_HOME)) { throw 'Set HERMES_HOME before removing the plugin.' }
+$pluginDir = Join-Path $env:HERMES_HOME 'desktop-plugins\deepseek-time'
+if (Test-Path -LiteralPath $pluginDir) { Remove-Item -LiteralPath $pluginDir -Recurse -Force }
 ```
 
 The plugin may not appear in Hermes' searchable marketplace list because this is a local disk plugin. Installation and removal are controlled by the file in the desktop plugin directory.
