@@ -2,7 +2,7 @@
 
 This package is the DeepSeek Harness (DSH) adapter. It registers through the native `conversation.input.dock` slot, then places the indicator outside the sidebar near the bottom of the viewport. It supports pointer dragging with viewport clamping and remembers the last position in the browser profile.
 
-When the indicator is hovered, it requests the current balance through a DSH Host-side route. The Host resolves `DEEPSEEK_API_KEY` through DSH's credentials service and calls only `https://api.deepseek.com/user/balance`; the key never enters the browser or plugin UI. Results are cached by the Host for five minutes. If no key is configured or the upstream request fails, the indicator continues to show the time period and displays a generic balance status.
+When the indicator is hovered, it requests a fresh balance through a DSH Host-side route. The Host resolves `DEEPSEEK_API_KEY` through DSH's credentials service and calls only `https://api.deepseek.com/user/balance`; the key never enters the browser or plugin UI. Simultaneous hover requests are coalesced while one request is in flight, but completed results are not cached. If no key is configured or the upstream request fails, the indicator continues to show the time period and displays a generic balance status.
 
 ## Build
 

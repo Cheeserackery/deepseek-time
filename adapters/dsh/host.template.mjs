@@ -3,13 +3,11 @@ export const name = 'deepseek-time'
 export const inject = ['webServer', 'credentials']
 
 const BALANCE_URL = 'https://api.deepseek.com/user/balance'
-const BALANCE_TTL_MS = 5 * 60 * 1000
 const JSON_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'no-store',
 }
 
-let cachedBalance = null
 let balanceInFlight = null
 
 async function requestBalance(ctx) {
@@ -43,14 +41,8 @@ async function requestBalance(ctx) {
 }
 
 function getBalance(ctx) {
-  const now = Date.now()
-  if (cachedBalance && now - cachedBalance.at < BALANCE_TTL_MS) return Promise.resolve(cachedBalance.value)
   if (balanceInFlight) return balanceInFlight
   balanceInFlight = requestBalance(ctx)
-    .then((value) => {
-      if (value.ok) cachedBalance = { at: Date.now(), value }
-      return value
-    })
     .finally(() => { balanceInFlight = null })
   return balanceInFlight
 }

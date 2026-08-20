@@ -2,7 +2,7 @@
 
 此目录是 DeepSeek Harness（DSH）适配器。插件使用原生 `conversation.input.dock` 插槽，并将图标放在侧边栏外侧靠近窗口底部的位置；支持指针拖拽、视口边界限制，并会记忆上次位置。
 
-鼠标悬停图标时，插件通过 DSH Host 侧接口查询余额。Host 使用 DSH 凭据服务解析 `DEEPSEEK_API_KEY`，只请求 `https://api.deepseek.com/user/balance`；API Key 不会进入浏览器或插件界面。Host 会缓存结果 5 分钟。未配置 Key 或接口失败时，插件仍正常显示时段和倒计时，仅显示通用余额状态。
+鼠标每次悬停图标时，插件都会通过 DSH Host 侧接口查询最新余额。Host 使用 DSH 凭据服务解析 `DEEPSEEK_API_KEY`，只请求 `https://api.deepseek.com/user/balance`；API Key 不会进入浏览器或插件界面。正在进行的并发悬停请求会合并，但已完成的结果不再缓存。未配置 Key 或接口失败时，插件仍正常显示时段和倒计时，仅显示通用余额状态。
 
 ## 构建
 
