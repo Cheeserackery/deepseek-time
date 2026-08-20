@@ -4,12 +4,17 @@
 
 DeepSeek Time is an open-source status indicator for DeepSeek's published pricing periods. It evaluates Beijing time (`Asia/Shanghai`), switches the DeepSeek mark between idle blue and peak red, and shows a live countdown to the next boundary.
 
+However, the Codex end cannot achieve persistent display, so it is not recommended to use it in Codex.
+
 Pricing periods currently implemented:
 
 - Peak: `09:00-12:00` and `14:00-18:00`
 - Idle: all other times
 
-Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/quick_start/pricing>.
+Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>.
+
+<img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/b773d0f1-cfe9-4ae3-8245-88380d081ab1" />
+
 
 ## Changelog
 
