@@ -20,5 +20,5 @@ codex plugin add deepseek-time@deepseek-time
 ## 兼容性说明
 
 - MCP App 是否获得画中画展示由 Codex 宿主决定。
-- MCP 服务只读取本地时间，不提供网络服务。
+- MCP 服务读取本地时间；调用 `show_deepseek_time` 时，如果 MCP 进程环境中显式提供了 `DEEPSEEK_API_KEY`，会查询官方 DeepSeek 余额接口并在工具结果/状态卡中显示余额。API Key 不会返回给卡片。Codex 没有向插件公开读取宿主内部凭据的接口，因此需要在 MCP 进程配置中显式提供该环境变量。
 - 插件使用共享的北京时间规则，项目采用 MIT 开源协议。

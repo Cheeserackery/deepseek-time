@@ -15,12 +15,14 @@ function widgetDocument() {
   #status { align-items: center; display: flex; flex-direction: column; gap: 5px; padding: 8px; width: 52px; }
   svg { height: 32px; width: 32px; }
   #time { font-size: 12px; font-variant-numeric: tabular-nums; font-weight: 650; line-height: 1; white-space: nowrap; }
+  #balance { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .82; white-space: nowrap; }
 </style></head><body>
-<div id="status" role="status"><svg aria-hidden="true" viewBox="0 0 50 50"><path id="mark" d="${DEEPSEEK_MARK_PATH}"/></svg><span id="time"></span></div>
+<div id="status" role="status"><svg aria-hidden="true" viewBox="0 0 50 50"><path id="mark" d="${DEEPSEEK_MARK_PATH}"/></svg><span id="time"></span><span id="balance"></span></div>
 <script>${widgetScript}</script>
 <script>
   const mark = document.getElementById('mark');
   const time = document.getElementById('time');
+  const balance = document.getElementById('balance');
   const status = document.getElementById('status');
   async function requestPictureInPicture() {
     try {
@@ -34,6 +36,10 @@ function widgetDocument() {
     mark.setAttribute('fill', state.color);
     time.style.color = state.color;
     time.textContent = state.remainingText;
+    const output = globalThis.openai?.toolOutput;
+    const account = output?.balance;
+    balance.textContent = account?.ok ? ((account.currency === 'CNY' ? '¥' : account.currency) + ' ' + Number(account.totalBalance).toFixed(2)) : '';
+    balance.style.color = state.color;
     status.setAttribute('aria-label', state.label + '，剩余 ' + state.remainingText);
     status.title = state.label;
     setTimeout(render, 1000 - (Date.now() % 1000));
@@ -43,11 +49,34 @@ function widgetDocument() {
 </script></body></html>`
 }
 
-function toolResult() {
+async function queryBalance() {
+  const apiKey = process.env.DEEPSEEK_API_KEY
+  if (!apiKey) return { ok: false, code: 'credential-missing' }
+  try {
+    const response = await fetch('https://api.deepseek.com/user/balance', {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: AbortSignal.timeout(15_000),
+    })
+    if (!response.ok) return { ok: false, code: 'upstream-unavailable' }
+    const body = await response.json()
+    const info = Array.isArray(body?.balance_infos) ? body.balance_infos[0] : undefined
+    const totalBalance = Number(info?.total_balance)
+    if (!info || !Number.isFinite(totalBalance)) return { ok: false, code: 'invalid-response' }
+    return { ok: true, totalBalance, currency: typeof info.currency === 'string' ? info.currency : 'CNY', updatedAt: new Date().toISOString() }
+  } catch {
+    return { ok: false, code: 'upstream-unavailable' }
+  }
+}
+
+async function toolResult() {
   const state = getDeepSeekTimeState()
+  const balance = await queryBalance()
+  const balanceText = balance.ok
+    ? `，余额 ${(balance.currency === 'CNY' ? '¥' : balance.currency)} ${balance.totalBalance.toFixed(2)}`
+    : balance.code === 'credential-missing' ? '，未配置可读取的 DEEPSEEK_API_KEY' : '，余额暂时无法获取'
   return {
-    content: [{ type: 'text', text: `${state.label}，剩余 ${state.remainingText}` }],
-    structuredContent: state,
+    content: [{ type: 'text', text: `${state.label}，剩余 ${state.remainingText}${balanceText}` }],
+    structuredContent: { ...state, balance },
     _meta: { 'openai/outputTemplate': WIDGET_URI },
   }
 }
@@ -83,7 +112,7 @@ async function handle(message) {
   }
   if (method === 'tools/call') {
     if (params.name !== 'show_deepseek_time') return failure(id, -32602, 'Unknown tool')
-    return response(id, toolResult())
+    return response(id, await toolResult())
   }
   if (method === 'resources/list') {
     return response(id, { resources: [{ uri: WIDGET_URI, name: 'DeepSeek Time', mimeType: 'text/html;profile=mcp-app' }] })

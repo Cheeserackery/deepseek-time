@@ -20,5 +20,5 @@ After changing the plugin, reinstall it from the same local marketplace and star
 ## Compatibility Notes
 
 - Codex controls whether MCP App cards receive picture-in-picture presentation.
-- The MCP server reads local time only and exposes no network service.
+- The MCP server reads local time and, when `DEEPSEEK_API_KEY` is explicitly present in the MCP process environment, queries the official DeepSeek balance endpoint when `show_deepseek_time` is called. The key is never returned to the card. Codex does not expose an API for reading credentials stored internally by the host, so the environment variable must be supplied by the user's process configuration.
 - The plugin follows the shared Beijing-time rules and is distributed under the MIT License.

@@ -15,8 +15,8 @@ Check DeepSeek's official pricing page before relying on these windows: <https:/
 
 The adapters share the tested core in `packages/core/`, but each host has its own package format and installation path.
 
-- `adapters/hermes/`: Hermes Desktop self-contained disk plugin. It appears in the native left status bar and does not affect the composer.
-- `adapters/dsh/`: DeepSeek Harness (DSH) Web client package. It uses the native conversation dock and fixes the indicator outside the sidebar near the bottom, following sidebar resize and collapse changes.
+- `adapters/hermes/`: Hermes Desktop self-contained disk plugin. It appears in the native left status bar and does not affect the composer; it currently shows time status only because Hermes does not expose a credential API to disk plugins.
+- `adapters/dsh/`: DeepSeek Harness (DSH) Web client package. It uses the native conversation dock, supports a remembered draggable position outside the sidebar, and can query the balance through the DSH credential service on hover.
 - `adapters/codex/deepseek-time/`: Codex plugin with the `show_deepseek_time` MCP tool and live status card. Picture-in-picture depends on Codex host support.
 
 ## Build And Verify
@@ -72,7 +72,7 @@ When upgrading from an older release, change the profile dependency path from `a
 
 To remove the adapter, first delete `deepseek-time` from the `dsh.profile.bundles` array, then run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH. Do not leave a bundle entry pointing to an uninstalled package.
 
-The DSH adapter requires the host's native `conversation.input.dock` slot. It does not patch DSH source code or inject global CSS.
+The DSH adapter requires the host's native `conversation.input.dock` slot. It does not patch DSH source code or inject global CSS. Balance display requires `DEEPSEEK_API_KEY` configured in DSH; the key stays on the Host side and never enters the browser.
 
 ## Install Codex
 
@@ -85,12 +85,12 @@ codex plugin add deepseek-time@deepseek-time
 
 Start a new Codex task after installation and call `show_deepseek_time`. Updates should be reinstalled from the same marketplace and tested in a new task. Remove the plugin with the removal command supported by your Codex version, or disable/remove this local marketplace in Codex settings.
 
-Codex controls MCP App presentation. The plugin requests picture-in-picture, but a host without that capability may show the live card inline. Codex does not provide the Hermes/DSH-style permanent global UI slot, so this adapter is tool-triggered rather than an always-on overlay.
+Codex controls MCP App presentation. The plugin requests picture-in-picture, but a host without that capability may show the live card inline. Codex does not provide the Hermes/DSH-style permanent global UI slot, so this adapter is tool-triggered rather than an always-on overlay. When the MCP process explicitly provides `DEEPSEEK_API_KEY`, the tool queries and returns the balance; the Codex plugin cannot read credentials stored internally by the host.
 
 ## Troubleshooting
 
 - If an adapter is missing after a source change, run `npm run build` before reinstalling it.
-- If DSH fails to start, restore the package's `main`, root export, `lib/index.js`, and `dsh.bundle` metadata; do not add a client-only bundle without its no-op host entry.
+- If DSH fails to start, restore the package's `main`, root export, `lib/index.js`, and `dsh.bundle` metadata; `lib/index.js` also owns the balance Host route and must not be removed or replaced with a client-only no-op entry.
 - If a plugin cannot be found in an in-app search list, use the documented local installation method. Local disk plugins and local marketplaces are not automatically published to a product's official catalog.
 - All adapters use the same shared time rules and should be checked against the official pricing page when DeepSeek changes its policy.
 

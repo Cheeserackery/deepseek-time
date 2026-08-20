@@ -1,6 +1,8 @@
 # DeepSeek Time DSH 适配器
 
-此目录是 DeepSeek Harness（DSH）Web 客户端适配器。插件使用原生 `conversation.input.dock` 插槽，并将图标固定在侧边栏外侧靠近窗口底部的位置；不会改变输入框高度，不支持拖动，并会跟随侧栏缩放、展开和收起更新位置。
+此目录是 DeepSeek Harness（DSH）适配器。插件使用原生 `conversation.input.dock` 插槽，并将图标放在侧边栏外侧靠近窗口底部的位置；支持指针拖拽、视口边界限制，并会记忆上次位置。
+
+鼠标悬停图标时，插件通过 DSH Host 侧接口查询余额。Host 使用 DSH 凭据服务解析 `DEEPSEEK_API_KEY`，只请求 `https://api.deepseek.com/user/balance`；API Key 不会进入浏览器或插件界面。Host 会缓存结果 5 分钟。未配置 Key 或接口失败时，插件仍正常显示时段和倒计时，仅显示通用余额状态。
 
 ## 构建
 
@@ -51,7 +53,9 @@ pnpm install
 
 ## 兼容性说明
 
-- 这是 DSH Web 客户端插件，不是单独运行的 DSH 宿主插件。
+- 该适配器包含 DSH Host 侧余额路由和 Web 客户端入口；它不会替换或修改 DSH 应用本身。
+- 显示余额需要在 DSH 的模型/凭据设置中配置 `DEEPSEEK_API_KEY`。不要把 Key 写入 `package.json`、源代码、浏览器存储或 GitHub 仓库。
+- 拖拽位置属于浏览器配置数据；清除站点数据后会恢复到侧边栏外侧的默认位置。
 - 共享规则使用北京时间：高峰时段为 `09:00-12:00` 和 `14:00-18:00`，其余为空闲时段。
 - DSH 版本需要提供 `conversation.input.dock` 插槽；本适配器不会修改 DSH 源码或注入全局 CSS。
 - 项目采用 MIT 开源协议，详见仓库根目录 `LICENSE`。

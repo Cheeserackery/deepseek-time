@@ -38,4 +38,4 @@ The plugin may not appear in Hermes' searchable marketplace list because this is
 
 ## Compatibility
 
-The generated `plugin.js` is self-contained and does not require npm dependencies at runtime. It uses the shared Beijing-time rules and the MIT License in the repository root.
+The generated `plugin.js` is self-contained and does not require npm dependencies at runtime. It uses the shared Beijing-time rules and the MIT License in the repository root. Hermes' disk plugin SDK does not expose a safe API for reading the host's stored DeepSeek credential, so this adapter intentionally shows time status only and never asks users to paste a key into the plugin.

@@ -1,6 +1,8 @@
 # DeepSeek Time DSH Adapter
 
-This package is the DeepSeek Harness (DSH) Web client adapter. It registers through the native `conversation.input.dock` slot, then fixes the indicator to the outside edge of the sidebar near the bottom of the viewport. The indicator does not change the composer height, does not support dragging, and follows sidebar resize and collapse events.
+This package is the DeepSeek Harness (DSH) adapter. It registers through the native `conversation.input.dock` slot, then places the indicator outside the sidebar near the bottom of the viewport. It supports pointer dragging with viewport clamping and remembers the last position in the browser profile.
+
+When the indicator is hovered, it requests the current balance through a DSH Host-side route. The Host resolves `DEEPSEEK_API_KEY` through DSH's credentials service and calls only `https://api.deepseek.com/user/balance`; the key never enters the browser or plugin UI. Results are cached by the Host for five minutes. If no key is configured or the upstream request fails, the indicator continues to show the time period and displays a generic balance status.
 
 ## Build
 
@@ -51,7 +53,9 @@ Restart DSH after removal.
 
 ## Compatibility Notes
 
-- The adapter is for the DSH Web client, not the DSH host process by itself.
+- The adapter includes a small DSH Host entry for the local balance route and a Web client entry; it does not replace or patch the DSH application.
+- Balance display requires `DEEPSEEK_API_KEY` to be configured in DSH's Models/credentials settings. No key is placed in `package.json`, source files, browser storage, or the repository.
+- The drag position is browser-profile state. Clearing site data resets it to the default location outside the sidebar.
 - It uses the shared Beijing-time rules: peak `09:00-12:00` and `14:00-18:00`; all other time is idle.
 - The DSH UI must expose `conversation.input.dock`; the adapter does not patch DSH application source or inject global CSS.
 - The project is distributed under the MIT License. See the repository root `LICENSE` file.

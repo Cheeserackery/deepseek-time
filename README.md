@@ -9,14 +9,14 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 - 高峰时段：`09:00-12:00`、`14:00-18:00`
 - 空闲时段：其余时间
 
-DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/quick_start/pricing>。
+DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
 ## 三端适配器
 
 三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：
 
-- `adapters/hermes/`：Hermes Desktop 单文件磁盘插件，显示在原生左侧状态栏，不影响输入框。
-- `adapters/dsh/`：DeepSeek Harness（DSH）Web 客户端包，使用原生会话输入插槽，图标固定在侧边栏外侧靠近底部，并跟随侧栏缩放和收起更新。
+- `adapters/hermes/`：Hermes Desktop 单文件磁盘插件，显示在原生左侧状态栏，不影响输入框；当前只显示时段和倒计时，不读取 Hermes 内部 API 凭据。
+- `adapters/dsh/`：DeepSeek Harness（DSH）Web 客户端包，使用原生会话输入插槽，默认位于侧边栏外侧靠近底部，支持拖拽记忆位置；悬停时可通过 DSH 凭据服务查询余额。
 - `adapters/codex/deepseek-time/`：Codex 插件，提供 `show_deepseek_time` MCP 工具和实时状态卡；画中画是否显示由 Codex 宿主决定。
 
 ## 构建与验证
@@ -72,7 +72,7 @@ pnpm install
 
 卸载时先从 `dsh.profile.bundles` 数组删除 `deepseek-time`，再执行 `pnpm remove deepseek-time` 和 `pnpm install`，最后重启 DSH；不要留下指向已删除包的 bundle 条目。
 
-DSH 适配器要求宿主提供原生 `conversation.input.dock` 插槽，不会修改 DSH 源码或注入全局 CSS。
+DSH 适配器要求宿主提供原生 `conversation.input.dock` 插槽，不会修改 DSH 源码或注入全局 CSS。余额功能要求 DSH 中配置 `DEEPSEEK_API_KEY`；Key 只在 Host 侧使用，不进入浏览器。
 
 ## 安装 Codex
 
@@ -85,12 +85,12 @@ codex plugin add deepseek-time@deepseek-time
 
 安装后新建 Codex 任务并调用 `show_deepseek_time`。更新时从同一个本地 marketplace 重新安装，并新建任务测试；卸载时使用当前 Codex 版本支持的移除命令，或在 Codex 设置中禁用/移除该 marketplace。
 
-Codex 宿主决定 MCP App 是否获得画中画展示。插件会请求画中画，但不支持的宿主可能以内嵌状态卡显示。Codex 没有 Hermes/DSH 那样的永久全局 UI 插槽，因此该适配器由工具调用触发，不是应用启动时自动悬浮。
+Codex 宿主决定 MCP App 是否获得画中画展示。插件会请求画中画，但不支持的宿主可能以内嵌状态卡显示。Codex 没有 Hermes/DSH 那样的永久全局 UI 插槽，因此该适配器由工具调用触发，不是应用启动时自动悬浮。调用工具时，如果 MCP 进程显式提供 `DEEPSEEK_API_KEY`，会查询并返回余额；Codex 插件不能读取宿主内部保存的凭据。
 
 ## 故障排查
 
 - 源码修改后插件不更新：先运行 `npm run build`，再重新安装对应适配器。
-- DSH 启动失败：检查 `main`、根导出、`lib/index.js` 和 `dsh.bundle` 是否完整；纯客户端包不能省略空宿主入口。
+- DSH 启动失败：检查 `main`、根导出、`lib/index.js` 和 `dsh.bundle` 是否完整；`lib/index.js` 同时注册余额 Host 路由，不能省略或改成仅客户端空入口。
 - 应用内搜索不到插件：按照本 README 的本地安装方式操作。放到 GitHub 或本地 marketplace 不会自动加入产品官方插件目录。
 - DeepSeek 调整定价规则后：以官方页面为准，并同步更新共享核心及测试。
 

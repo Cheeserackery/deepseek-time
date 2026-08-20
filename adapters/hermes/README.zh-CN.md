@@ -38,4 +38,4 @@ if (Test-Path -LiteralPath $pluginDir) { Remove-Item -LiteralPath $pluginDir -Re
 
 ## 兼容性
 
-生成的 `plugin.js` 运行时自包含，不需要额外 npm 依赖。它使用共享的北京时间规则，项目采用仓库根目录声明的 MIT 协议。
+生成的 `plugin.js` 运行时自包含，不需要额外 npm 依赖。它使用共享的北京时间规则，项目采用仓库根目录声明的 MIT 协议。Hermes 磁盘插件 SDK 没有公开安全读取宿主 DeepSeek 凭据的接口，因此本适配器有意只显示时段和倒计时，不要求用户把 Key 粘贴到插件中。
