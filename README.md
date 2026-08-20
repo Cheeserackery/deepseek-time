@@ -11,6 +11,16 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 
 DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
+## 更新说明
+
+### V10（2026-08-21）
+
+- DSH 图标支持自由拖拽，并记忆用户最后的位置。
+- DSH 每次重新悬停图标时刷新查询 DeepSeek API 余额，不再缓存已完成的余额结果；并发查询会合并，保留超时、失败和无凭据处理。
+- DSH 余额查询在 Host 侧使用凭据服务完成，API Key 不进入浏览器或 GitHub。
+- Codex 在调用 `show_deepseek_time` 时查询余额（需要 MCP 进程显式提供 `DEEPSEEK_API_KEY`）。
+- Hermes 继续保持仅显示时段和倒计时，因为其磁盘插件 SDK 未提供安全读取内部凭据的接口。
+
 ## 三端适配器
 
 三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：

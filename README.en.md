@@ -11,6 +11,16 @@ Pricing periods currently implemented:
 
 Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/quick_start/pricing>.
 
+## Changelog
+
+### V10 (2026-08-21)
+
+- DSH now supports free dragging and remembers the indicator's last position.
+- DSH fetches a fresh DeepSeek API balance on every new hover instead of caching completed results. Concurrent requests are coalesced, with timeout, failure, and missing-credential handling retained.
+- DSH performs balance requests on the Host side through its credential service; the API key never enters the browser or GitHub.
+- Codex queries the balance when `show_deepseek_time` is called, when `DEEPSEEK_API_KEY` is explicitly supplied to the MCP process.
+- Hermes remains time-status-only because its disk-plugin SDK does not expose a safe API for reading internal credentials.
+
 ## Supported Adapters
 
 The adapters share the tested core in `packages/core/`, but each host has its own package format and installation path.
