@@ -30,8 +30,6 @@ DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<http
 - 根据 DeepSeek 官方最新规则，峰值定价仅适用于北京时间周一至周五的 `09:00-12:00`、`14:00-18:00`。
 - 周六、周日全天显示为空闲时段，并倒计时至下一个周一 `09:00`。
 
-<img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/0bf1417f-f5de-491b-8a40-e148beca165d" />
-
 ## 三端适配器
 
 三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：
