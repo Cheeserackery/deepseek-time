@@ -8,8 +8,8 @@ However, the Codex end cannot achieve persistent display, so it is not recommend
 
 Pricing periods currently implemented:
 
-- Peak: `09:00-12:00` and `14:00-18:00`
-- Idle: all other times
+- Peak on Beijing-time weekdays (Monday-Friday): `09:00-12:00` and `14:00-18:00`
+- Idle: all other times, including all of Saturday and Sunday
 
 Check DeepSeek's official pricing page before relying on these windows: <https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>.
 
@@ -25,6 +25,11 @@ Check DeepSeek's official pricing page before relying on these windows: <https:/
 - DSH performs balance requests on the Host side through its credential service; the API key never enters the browser or GitHub.
 - Codex queries the balance when `show_deepseek_time` is called, when `DEEPSEEK_API_KEY` is explicitly supplied to the MCP process.
 - Hermes remains time-status-only because its disk-plugin SDK does not expose a safe API for reading internal credentials.
+
+### V11 (2026-08-23)
+
+- Updated the pricing rules to apply peak periods only on Beijing-time weekdays (Monday-Friday), `09:00-12:00` and `14:00-18:00`.
+- Saturday and Sunday are idle all day, with the countdown continuing to the next Monday at `09:00`.
 
 ## Supported Adapters
 

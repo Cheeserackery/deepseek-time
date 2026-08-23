@@ -8,8 +8,8 @@ DeepSeek Time 是一个开源的 DeepSeek 定价时段状态指示器。程序�
 
 当前规则：
 
-- 高峰时段：`09:00-12:00`、`14:00-18:00`
-- 空闲时段：其余时间
+- 高峰时段：北京时间周一至周五 `09:00-12:00`、`14:00-18:00`
+- 空闲时段：其余时间，周六、周日全天为空闲时段
 
 DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<https://api-docs.deepseek.com/zh-cn/quick_start/pricing/>。
 
@@ -22,6 +22,11 @@ DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<http
 - DSH 余额查询在 Host 侧使用凭据服务完成，API Key 不进入浏览器或 GitHub。
 - Codex 在调用 `show_deepseek_time` 时查询余额（需要 MCP 进程显式提供 `DEEPSEEK_API_KEY`）。
 - Hermes 继续保持仅显示时段和倒计时，因为其磁盘插件 SDK 未提供安全读取内部凭据的接口。
+
+### V11（2026-08-23）
+
+- 根据 DeepSeek 官方最新规则，峰值定价仅适用于北京时间周一至周五的 `09:00-12:00`、`14:00-18:00`。
+- 周六、周日全天显示为空闲时段，并倒计时至下一个周一 `09:00`。
 
 <img width="1190" height="1718" alt="DS-TIME示例图 拷贝" src="https://github.com/user-attachments/assets/0bf1417f-f5de-491b-8a40-e148beca165d" />
 

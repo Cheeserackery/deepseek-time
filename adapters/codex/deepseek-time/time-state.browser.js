@@ -10,7 +10,7 @@ const BEIJING_OFFSET_MS = 8 * 60 * 60 * 1000
  * Convert an instant into the Gregorian calendar fields used by Beijing's fixed UTC+8 offset.
  *
  * @param {number} epochMs Unix epoch milliseconds.
- * @returns {{ year: number, month: number, day: number, hour: number, minute: number, second: number }}
+ * @returns {{ year: number, month: number, day: number, weekday: number, hour: number, minute: number, second: number }}
  */
 function beijingParts(epochMs) {
   const date = new Date(epochMs + BEIJING_OFFSET_MS)
@@ -18,6 +18,7 @@ function beijingParts(epochMs) {
     year: date.getUTCFullYear(),
     month: date.getUTCMonth(),
     day: date.getUTCDate(),
+    weekday: date.getUTCDay(),
     hour: date.getUTCHours(),
     minute: date.getUTCMinutes(),
     second: date.getUTCSeconds(),
@@ -62,9 +63,10 @@ function formatRemainingTime(durationMs) {
 /**
  * Determine the active DeepSeek pricing window at an instant.
  *
- * Peak windows are `[09:00, 12:00)` and `[14:00, 18:00)` in Beijing. Every
- * other instant is idle. The next boundary is exclusive, so an exact boundary
- * belongs to the interval that starts there.
+ * Peak windows are `[09:00, 12:00)` and `[14:00, 18:00)` on Beijing-time
+ * weekdays (Monday through Friday). Weekends are idle for the whole day. The
+ * next boundary is exclusive, so an exact boundary belongs to the interval
+ * that starts there.
  *
  * @param {number|Date} [instant=Date.now()] Unix milliseconds or Date instance.
  * @returns {{ phase: 'peak'|'idle', label: string, color: string, nextBoundary: number, remainingMs: number, remainingText: string }}
@@ -79,23 +81,29 @@ function getDeepSeekTimeState(instant = Date.now()) {
   const noon = 12 * 3600
   const fourteen = 14 * 3600
   const eighteen = 18 * 3600
+  const isWeekday = day.weekday >= 1 && day.weekday <= 5
 
   let phase
   let nextBoundary
-  if (secondsSinceMidnight >= nine && secondsSinceMidnight < noon) {
+  if (isWeekday && secondsSinceMidnight >= nine && secondsSinceMidnight < noon) {
     phase = 'peak'
     nextBoundary = atBeijingHour(day, 12)
-  } else if (secondsSinceMidnight >= fourteen && secondsSinceMidnight < eighteen) {
+  } else if (isWeekday && secondsSinceMidnight >= fourteen && secondsSinceMidnight < eighteen) {
     phase = 'peak'
     nextBoundary = atBeijingHour(day, 18)
-  } else if (secondsSinceMidnight >= noon && secondsSinceMidnight < fourteen) {
+  } else if (isWeekday && secondsSinceMidnight >= noon && secondsSinceMidnight < fourteen) {
     phase = 'idle'
     nextBoundary = atBeijingHour(day, 14)
   } else {
     phase = 'idle'
-    const tomorrow = new Date(Date.UTC(day.year, day.month, day.day + 1))
-    const nextDay = { year: tomorrow.getUTCFullYear(), month: tomorrow.getUTCMonth(), day: tomorrow.getUTCDate() }
-    nextBoundary = secondsSinceMidnight < nine ? atBeijingHour(day, 9) : atBeijingHour(nextDay, 9)
+    const daysUntilMonday = day.weekday === 0 ? 1 : day.weekday === 6 ? 2 : 0
+    if (daysUntilMonday > 0 || secondsSinceMidnight >= eighteen) {
+      const daysAhead = daysUntilMonday > 0 ? daysUntilMonday : 8 - day.weekday
+      const nextDay = new Date(Date.UTC(day.year, day.month, day.day + daysAhead))
+      nextBoundary = atBeijingHour({ year: nextDay.getUTCFullYear(), month: nextDay.getUTCMonth(), day: nextDay.getUTCDate() }, 9)
+    } else {
+      nextBoundary = atBeijingHour(day, 9)
+    }
   }
 
   const remainingMs = Math.max(0, nextBoundary - epochMs)
@@ -109,7 +117,6 @@ function getDeepSeekTimeState(instant = Date.now()) {
     remainingText: formatRemainingTime(remainingMs),
   }
 }
-
 
 
 globalThis.DeepSeekTime = { BEIJING_TIME_ZONE, IDLE_COLOR, PEAK_COLOR, formatRemainingTime, getDeepSeekTimeState }

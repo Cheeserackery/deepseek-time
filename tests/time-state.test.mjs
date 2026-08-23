@@ -4,6 +4,8 @@ import { formatRemainingTime, getDeepSeekTimeState } from '../packages/core/src/
 
 const atBeijing = (hour, minute = 0, second = 0, millisecond = 0) =>
   Date.UTC(2026, 7, 17, hour - 8, minute, second, millisecond)
+const atBeijingDate = (day, hour, minute = 0, second = 0) =>
+  Date.UTC(2026, 7, day, hour - 8, minute, second)
 
 test('remains idle before the morning peak and counts down to 09:00', () => {
   const state = getDeepSeekTimeState(atBeijing(8, 59, 59, 100))
@@ -29,10 +31,28 @@ test('switches to peak exactly at 14:00', () => {
   assert.equal(state.remainingText, '04:00:00')
 })
 
-test('switches to overnight idle exactly at 18:00', () => {
+test('switches to weekday overnight idle exactly at 18:00', () => {
   const state = getDeepSeekTimeState(atBeijing(18))
   assert.equal(state.phase, 'idle')
-  assert.equal(state.remainingText, '15:00:00')
+  assert.equal(state.remainingText, '159:00:00')
+})
+
+test('keeps Saturday entirely idle and counts down to Monday 09:00', () => {
+  const state = getDeepSeekTimeState(atBeijingDate(22, 10))
+  assert.equal(state.phase, 'idle')
+  assert.equal(state.remainingText, '47:00:00')
+})
+
+test('keeps Sunday entirely idle and counts down to Monday 09:00', () => {
+  const state = getDeepSeekTimeState(atBeijingDate(23, 10))
+  assert.equal(state.phase, 'idle')
+  assert.equal(state.remainingText, '23:00:00')
+})
+
+test('counts from Friday evening to Monday morning', () => {
+  const state = getDeepSeekTimeState(atBeijingDate(21, 19))
+  assert.equal(state.phase, 'idle')
+  assert.equal(state.remainingText, '62:00:00')
 })
 
 test('accepts Date inputs and preserves a partial final second', () => {

@@ -56,6 +56,6 @@ Restart DSH after removal.
 - The adapter includes a small DSH Host entry for the local balance route and a Web client entry; it does not replace or patch the DSH application.
 - Balance display requires `DEEPSEEK_API_KEY` to be configured in DSH's Models/credentials settings. No key is placed in `package.json`, source files, browser storage, or the repository.
 - The drag position is browser-profile state. Clearing site data resets it to the default location outside the sidebar.
-- It uses the shared Beijing-time rules: peak `09:00-12:00` and `14:00-18:00`; all other time is idle.
+- It uses the shared Beijing-time rules: weekday peak `09:00-12:00` and `14:00-18:00` (Monday-Friday); weekends are idle all day.
 - The DSH UI must expose `conversation.input.dock`; the adapter does not patch DSH application source or inject global CSS.
 - The project is distributed under the MIT License. See the repository root `LICENSE` file.
