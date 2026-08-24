@@ -1,6 +1,6 @@
 {
   "name": "deepseek-time",
-  "version": "0.1.0+codex.20260820155159",
+  "version": "0.1.0+codex.20260824151247",
   "description": "Show DeepSeek peak and idle pricing periods in Codex.",
   "author": {
     "name": "DeepSeek Time"

@@ -34,7 +34,7 @@ test('switches to peak exactly at 14:00', () => {
 test('switches to weekday overnight idle exactly at 18:00', () => {
   const state = getDeepSeekTimeState(atBeijing(18))
   assert.equal(state.phase, 'idle')
-  assert.equal(state.remainingText, '159:00:00')
+  assert.equal(state.remainingText, '15:00:00')
 })
 
 test('keeps Saturday entirely idle and counts down to Monday 09:00', () => {
@@ -53,6 +53,18 @@ test('counts from Friday evening to Monday morning', () => {
   const state = getDeepSeekTimeState(atBeijingDate(21, 19))
   assert.equal(state.phase, 'idle')
   assert.equal(state.remainingText, '62:00:00')
+})
+
+test('counts from Monday evening to Tuesday morning', () => {
+  const state = getDeepSeekTimeState(atBeijingDate(17, 23, 3, 28))
+  assert.equal(state.phase, 'idle')
+  assert.equal(state.remainingText, '09:56:32')
+})
+
+test('counts from Thursday evening to Friday morning', () => {
+  const state = getDeepSeekTimeState(atBeijingDate(20, 19))
+  assert.equal(state.phase, 'idle')
+  assert.equal(state.remainingText, '14:00:00')
 })
 
 test('accepts Date inputs and preserves a partial final second', () => {

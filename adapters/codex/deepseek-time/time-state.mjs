@@ -98,7 +98,13 @@ export function getDeepSeekTimeState(instant = Date.now()) {
     phase = 'idle'
     const daysUntilMonday = day.weekday === 0 ? 1 : day.weekday === 6 ? 2 : 0
     if (daysUntilMonday > 0 || secondsSinceMidnight >= eighteen) {
-      const daysAhead = daysUntilMonday > 0 ? daysUntilMonday : 8 - day.weekday
+      // Weekday evenings end at the following morning, except Friday, which
+      // remains idle through the weekend until Monday 09:00.
+      const daysAhead = daysUntilMonday > 0
+        ? daysUntilMonday
+        : day.weekday === 5
+          ? 3
+          : 1
       const nextDay = new Date(Date.UTC(day.year, day.month, day.day + daysAhead))
       nextBoundary = atBeijingHour({ year: nextDay.getUTCFullYear(), month: nextDay.getUTCMonth(), day: nextDay.getUTCDate() }, 9)
     } else {
