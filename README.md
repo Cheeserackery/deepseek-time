@@ -35,7 +35,7 @@ DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<http
 - 适配 DeepSeek Harness `0.2.2-rc.1`：DSH 图标改注册到框架级 `shell.overlay` 浮层插槽，不再依赖会话作用域的 `conversation.input.dock`，空白“新会话”界面也常驻显示。
 - 位置计算改用新版布局的有文档契约（`data-shell-overlay` 浮层与侧边栏网格列），侧边栏折叠、抽屉模式和窗口缩放都会跟随并保持夹取，不再依赖内联 `grid-template-columns` 样式和首个子元素推断。
 - 悬停或聚焦时显示详情卡：计价时段、北京时间下次切换点与账户余额；钉住图标后双击可复位。
-- 配色、边框和阴影改用 DSH 主题变量并提供回退值，浅色与深色主题自适应。
+- 常驻图标保持原有透明样式：只有 DeepSeek 图标和彩色倒计时，没有卡片背景、边框或阴影；悬停详情卡使用 DSH 主题变量并提供回退值，浅色与深色主题自适应。
 - 包清单补齐 `0.2.x` 插件契约：`dsh.manifestVersion`、`engines.dsh`、`dsh.client.inject` 指向 `@deepseek-ai/dsh-client-ui-layout`，并新增包图标与 `locale/*` 元数据，插件管理器可显示标题、描述与图标。
 - 修复构建脚本的图标路径（`图标/` → `icon/`），新增 `adapters/dsh/icon.svg` 生成、清单校验与客户端产物冒烟测试。
 

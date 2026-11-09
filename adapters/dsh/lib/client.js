@@ -148,8 +148,8 @@ window.__ModuleLoader__.load({
     const SIDEBAR_GAP = 6
     /** Default bottom inset, clear of the composer card. */
     const BOTTOM_INSET = 96
-    /** Pill width in px; kept here because the default position and the hover card need it. */
-    const PILL_WIDTH = 52
+    /** Width of the transparent indicator column; also used for card placement math. */
+    const PILL_WIDTH = 48
     /** Approximate width of the hover card, used to pick its side. */
     const CARD_WIDTH = 184
 
@@ -445,21 +445,19 @@ window.__ModuleLoader__.load({
       const statusText = amountText
         ?? (balanceStatus === 'loading' ? TEXT.loading : balanceStatus === 'missing' ? TEXT.missing : balanceStatus === 'error' ? TEXT.error : '')
 
+      // Transparent, background-free indicator: only the DeepSeek mark and the colored
+      // countdown sit on the app surface, matching the pre-0.2.2 look. The hover card is
+      // the only surface that draws a background.
       const pillStyle = {
         alignItems: 'center',
-        background: 'var(--dsw-alias-bg-overlay, rgba(255, 255, 255, 0.92))',
-        border: '0.5px solid var(--dsw-alias-border-l2, rgba(0, 0, 0, 0.12))',
-        borderRadius: 12,
-        boxShadow: 'var(--dsw-elevation-prominent, 0 2px 10px rgba(0, 0, 0, 0.16))',
-        boxSizing: 'border-box',
         cursor: dragRef.current === null ? 'grab' : 'grabbing',
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
-        minWidth: PILL_WIDTH,
-        padding: '6px 4px',
+        gap: 4,
+        padding: '4px 0',
         touchAction: 'none',
         userSelect: 'none',
+        width: PILL_WIDTH,
       }
 
       const rootStyle = {
@@ -468,7 +466,7 @@ window.__ModuleLoader__.load({
         position: 'fixed',
         top: position ? position.top : undefined,
         visibility: geometry === null ? 'hidden' : 'visible',
-        zIndex: 1,
+        zIndex: 8,
       }
 
       const cardStyle = {
@@ -526,13 +524,13 @@ window.__ModuleLoader__.load({
             children: [
               jsx('svg', {
                 fill: 'none',
-                height: 26,
+                height: 30,
                 viewBox: '0 0 50 50',
-                width: 26,
+                width: 30,
                 children: jsx('path', { d: DEEPSEEK_MARK_PATH, fill: state.color }),
               }),
               jsx('span', {
-                style: { color: state.color, fontSize: 11, fontVariantNumeric: 'tabular-nums', fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' },
+                style: { color: state.color, fontSize: 11, fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' },
                 children: state.remainingText,
               }),
             ],

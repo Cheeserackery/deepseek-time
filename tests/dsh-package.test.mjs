@@ -183,6 +183,16 @@ test('DSH client bundle registers the shell.overlay status pill', async () => {
   assert.ok(nodes.some((node) => node.type === 'svg'), 'the DeepSeek mark must render')
   assert.ok(nodes.some((node) => node.type === 'path' && typeof node.props.d === 'string' && node.props.d.length > 0))
   assert.ok(nodes.some((node) => node.type === 'span' && /^\d{2}:\d{2}:\d{2}$/.test(node.props.children)))
+
+  // The indicator itself stays chrome-free (原样式): only the mark and the countdown sit on
+  // the app surface; no card background, border, radius, or shadow.
+  const indicator = nodes.find((node) => node.type === 'div' && typeof node.props.onPointerDown === 'function')
+  assert.ok(indicator, 'the draggable indicator must render')
+  for (const chrome of ['background', 'backgroundColor', 'border', 'borderRadius', 'boxShadow']) {
+    assert.equal(indicator.props.style[chrome], undefined, `indicator must not draw ${chrome}`)
+  }
+  assert.equal(indicator.props.style.width, 48)
+  assert.equal(indicator.props.style.gap, 4)
 })
 
 test('DSH host entry registers the same-origin balance route', async () => {

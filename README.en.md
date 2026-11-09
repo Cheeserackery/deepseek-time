@@ -35,7 +35,7 @@ Check DeepSeek's official pricing page before relying on these windows: <https:/
 - Adapted to DeepSeek Harness `0.2.2-rc.1`: the DSH indicator now registers into the frame-wide `shell.overlay` slot instead of the session-scoped `conversation.input.dock`, so it stays visible on the blank New Session screen too.
 - Positioning now reads the documented layout facts (`data-shell-overlay` layer and the sidebar's grid seat), follows sidebar collapse, drawer mode, and window resizes with clamping, and no longer depends on inline `grid-template-columns` styles or first-child guesses.
 - Hover or focus shows a detail card (pricing period, next Beijing-time boundary, account balance); double-click resets a dragged position.
-- Colors, borders, and shadows use DSH theme variables with fallbacks, so the pill follows light and dark themes.
+- The resident indicator keeps its original chrome-free look (only the DeepSeek mark and the colored countdown, with no card background, border, or shadow); the hover card uses DSH theme variables with fallbacks, so it follows light and dark themes.
 - Package manifest declares the `0.2.x` plugin contract: `dsh.manifestVersion`, `engines.dsh`, `dsh.client.inject` pointing at `@deepseek-ai/dsh-client-ui-layout`, plus a package icon and `locale/*` metadata so the plugin manager shows title, description, and icon.
 - Fixed the build script's icon path (`图标/` → `icon/`) and added `adapters/dsh/icon.svg` staging, manifest checks, and client-artifact smoke tests.
 

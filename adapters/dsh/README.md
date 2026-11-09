@@ -54,7 +54,7 @@ To remove the adapter, first delete `deepseek-time` from `dsh.profile.bundles` (
 
 - Requires DSH `0.2.2-rc.1` or a later `0.2.x` release. The adapter relies on the `shell.overlay` slot declared by `@deepseek-ai/dsh-client-ui-layout`; it does not patch DSH application source and injects no global CSS.
 - Positioning reads only two documented DOM facts: the `data-shell-overlay` layer attribute and the sidebar's grid seat. It follows sidebar collapse, drawer mode, and window resizes.
-- Colors use DSH theme variables with sane fallbacks, so the pill follows light and dark themes.
+- The resident indicator keeps the original chrome-free look: only the DeepSeek mark and the colored countdown sit on the app surface, with no card background, border, or shadow. The hover card uses DSH theme variables with fallbacks, so it follows light and dark themes.
 - Balance display requires `DEEPSEEK_API_KEY` to be configured in DSH's models/credentials settings. No key is placed in `package.json`, source files, browser storage, or the repository.
 - The drag position is browser-profile state. Clearing site data resets it to the default location outside the sidebar.
 - Time rules are shared and always use Beijing time: weekday peak `09:00-12:00` and `14:00-18:00` (Monday-Friday); weekends are idle all day.
