@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "DeepSeek 时段",
+    "description": "在 DSH 窗口中显示 DeepSeek 当前是高峰还是空闲计价时段，倒计时到下一个北京时间切换点，并在悬停时查询账户余额。",
+    "detail": "README.zh-CN.md"
+  }
+}

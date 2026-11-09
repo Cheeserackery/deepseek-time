@@ -3,6 +3,7 @@ export const name = 'deepseek-time'
 export const inject = ['webServer', 'credentials']
 
 const BALANCE_URL = 'https://api.deepseek.com/user/balance'
+const BALANCE_TIMEOUT_MS = 15_000
 const JSON_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'no-store',
@@ -10,6 +11,10 @@ const JSON_HEADERS = {
 
 let balanceInFlight = null
 
+/**
+ * Read the account balance through the credentials service. The API key is resolved on the
+ * Host for each query and never crosses into the browser.
+ */
 async function requestBalance(ctx) {
   let credential
   try {
@@ -21,12 +26,14 @@ async function requestBalance(ctx) {
 
   try {
     const response = await fetch(BALANCE_URL, {
-      headers: { Authorization: `Bearer ${credential.value}` },
-      signal: AbortSignal.timeout(15_000),
+      headers: { Authorization: `Bearer ${credential.value}`, Accept: 'application/json' },
+      signal: AbortSignal.timeout(BALANCE_TIMEOUT_MS),
     })
     if (!response.ok) return { ok: false, code: 'upstream-unavailable' }
     const body = await response.json()
-    const info = Array.isArray(body?.balance_infos) ? body.balance_infos[0] : undefined
+    const infos = Array.isArray(body?.balance_infos) ? body.balance_infos : []
+    // Prefer the CNY wallet when an account reports several currencies.
+    const info = infos.find((item) => item?.currency === 'CNY') ?? infos[0]
     const totalBalance = Number(info?.total_balance)
     if (!info || !Number.isFinite(totalBalance)) return { ok: false, code: 'invalid-response' }
     return {
@@ -40,6 +47,7 @@ async function requestBalance(ctx) {
   }
 }
 
+/** Coalesce concurrent hover queries; a finished query is not cached, so the next hover is fresh. */
 function getBalance(ctx) {
   if (balanceInFlight) return balanceInFlight
   balanceInFlight = requestBalance(ctx)
@@ -47,6 +55,7 @@ function getBalance(ctx) {
   return balanceInFlight
 }
 
+/** Reject cross-origin reads while still accepting same-origin fetches that omit Origin. */
 function isSameOriginRequest(req) {
   const origin = req.headers?.origin
   const host = req.headers?.host

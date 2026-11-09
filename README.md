@@ -30,12 +30,21 @@ DeepSeek 的价格和时段可能调整，使用前请查看官方页面：<http
 - 根据 DeepSeek 官方最新规则，峰值定价仅适用于北京时间周一至周五的 `09:00-12:00`、`14:00-18:00`。
 - 周六、周日全天显示为空闲时段，并倒计时至下一个周一 `09:00`。
 
+### V12（2026-11-09）
+
+- 适配 DeepSeek Harness `0.2.2-rc.1`：DSH 图标改注册到框架级 `shell.overlay` 浮层插槽，不再依赖会话作用域的 `conversation.input.dock`，空白“新会话”界面也常驻显示。
+- 位置计算改用新版布局的有文档契约（`data-shell-overlay` 浮层与侧边栏网格列），侧边栏折叠、抽屉模式和窗口缩放都会跟随并保持夹取，不再依赖内联 `grid-template-columns` 样式和首个子元素推断。
+- 悬停或聚焦时显示详情卡：计价时段、北京时间下次切换点与账户余额；钉住图标后双击可复位。
+- 配色、边框和阴影改用 DSH 主题变量并提供回退值，浅色与深色主题自适应。
+- 包清单补齐 `0.2.x` 插件契约：`dsh.manifestVersion`、`engines.dsh`、`dsh.client.inject` 指向 `@deepseek-ai/dsh-client-ui-layout`，并新增包图标与 `locale/*` 元数据，插件管理器可显示标题、描述与图标。
+- 修复构建脚本的图标路径（`图标/` → `icon/`），新增 `adapters/dsh/icon.svg` 生成、清单校验与客户端产物冒烟测试。
+
 ## 三端适配器
 
 三端共享 `packages/core/` 中经过测试的时间逻辑，但安装方式分别遵循宿主产品的插件规范：
 
 - `adapters/hermes/`：Hermes Desktop 单文件磁盘插件，显示在原生左侧状态栏，不影响输入框；当前只显示时段和倒计时，不读取 Hermes 内部 API 凭据。
-- `adapters/dsh/`：DeepSeek Harness（DSH）Web 客户端包，使用原生会话输入插槽，默认位于侧边栏外侧靠近底部，支持拖拽记忆位置；悬停时可通过 DSH 凭据服务查询余额。
+- `adapters/dsh/`：DeepSeek Harness（DSH）Web 客户端包，面向 DSH `0.2.2-rc.1` 及之后的 `0.2.x`。注册到框架级 `shell.overlay` 浮层插槽，图标常驻在所有会话之上并支持拖拽记忆位置；悬停时可通过 DSH 凭据服务查询余额。
 - `adapters/codex/deepseek-time/`：Codex 插件，提供 `show_deepseek_time` MCP 工具和实时状态卡；画中画是否显示由 Codex 宿主决定。
 
 ## 构建与验证
@@ -47,7 +56,7 @@ npm run build
 npm run verify
 ```
 
-`npm run build` 会生成共享模块、图标路径、Hermes 单文件插件和 DSH 客户端包。不要手动编辑适配器 `lib/` 或生成的 `src/` 文件；修改源模板或共享核心后重新构建。
+`npm run build` 会生成共享模块、图标路径、Hermes 单文件插件、DSH 客户端包和 DSH 包图标。不要手动编辑适配器 `lib/` 或生成的 `src/` 文件；修改源模板或共享核心后重新构建。`npm run verify` 还会校验 DSH 清单、图标、locale 元数据以及构建后客户端包的插槽注册。
 
 ## 安装 Hermes Desktop
 
@@ -68,15 +77,17 @@ Copy-Item -LiteralPath 'adapters\hermes\plugin.js' -Destination (Join-Path $plug
 
 ## 安装 DeepSeek Harness（DSH）
 
+要求 DSH `0.2.2-rc.1` 或之后的 `0.2.x`。适配器声明了 `engines.dsh: ^0.2.2-rc.1`，不兼容的 DSH 版本会拒绝加载，而不是运行不匹配的客户端代码。
+
 1. 克隆仓库并运行 `npm run build`。
-2. 在 DSH Web profile 目录执行以下命令，将 `<仓库路径>` 替换为实际克隆路径：
+2. 在 DSH Web profile 目录（通常是 `<DSH_HOME>\profiles\<profile>`，桌面版为 `%DSH_HOME%\profiles\desktop`）执行以下命令，将 `<仓库路径>` 替换为实际克隆路径：
 
 ```powershell
 pnpm add "file:<仓库路径>\adapters\dsh"
 pnpm install
 ```
 
-3. 编辑 DSH Web profile 目录下的 `package.json`，在现有 `dsh.profile.bundles` 数组中加入一次 `deepseek-time`，并保留数组中的其他 bundle。`pnpm add` 只会添加依赖，不会自动把 bundle 加入该数组。确认依赖和 bundle 同时存在后，再运行 `pnpm install` 并重启 DSH。包内的 `dsh.client` 和 `dsh.bundle` 元数据会提供客户端和 Loader 注册。
+3. 编辑该目录下的 `package.json`，在现有 `dsh.profile.bundles` 数组中加入一次 `deepseek-time`，并保留数组中的其他 bundle。`pnpm add` 只会添加依赖，不会自动把 bundle 加入该数组。确认依赖和 bundle 同时存在后，再运行 `pnpm install` 并重启 DSH。包内的 `dsh.client` 和 `dsh.bundle` 元数据会提供客户端和 Loader 注册。
 
 配置结构应类似下面这样；只添加条目，不要覆盖 profile 原有内容：
 
@@ -87,11 +98,13 @@ pnpm install
 }
 ```
 
-从旧版本升级时，将 profile `package.json` 中依赖值里的 `adapters/harness` 改为 `adapters/dsh`，不要保留旧路径，然后运行 `pnpm install`。更新时重新运行 `npm run build`，重复上述安装命令并重启 DSH。必须保留 `adapters/dsh/lib/index.js`、包根导出、`main` 和 `cordis.patch.yml`，它们用于保证 DSH 安全加载。
+4. 之后可在 DSH 的 **设置 → 插件** 中开启或关闭它；插件管理器写入的是同一份 bundle 选择，并会显示本插件的标题、描述与图标。升级 DSH 后请确认插件仍处于启用状态：从 DSH 0.2.x 升级时，旧版插件条目可能被保留为“未启用”。
 
-卸载时先从 `dsh.profile.bundles` 数组删除 `deepseek-time`，再执行 `pnpm remove deepseek-time` 和 `pnpm install`，最后重启 DSH；不要留下指向已删除包的 bundle 条目。
+从旧版本升级时，将 profile `package.json` 中依赖值里的 `adapters/harness` 改为 `adapters/dsh`，不要保留旧路径，然后运行 `pnpm install`。更新本适配器时重新运行 `npm run build`，重复上述安装命令并重启 DSH。必须保留 `adapters/dsh/lib/index.js`、包根导出、`main` 和 `cordis.patch.yml`，它们用于保证 DSH 安全加载。
 
-DSH 适配器要求宿主提供原生 `conversation.input.dock` 插槽，不会修改 DSH 源码或注入全局 CSS。余额功能要求 DSH 中配置 `DEEPSEEK_API_KEY`；Key 只在 Host 侧使用，不进入浏览器。
+卸载时先在插件管理器中停用，或从 `dsh.profile.bundles` 数组删除 `deepseek-time`，再执行 `pnpm remove deepseek-time` 和 `pnpm install`，最后重启 DSH；不要留下指向已删除包的 bundle 条目。
+
+DSH 适配器注册到 `@deepseek-ai/dsh-client-ui-layout` 声明的 `shell.overlay` 浮层插槽，不会修改 DSH 源码或注入全局 CSS。余额功能要求 DSH 中配置 `DEEPSEEK_API_KEY`；Key 只在 Host 侧使用，不进入浏览器。
 
 ## 安装 Codex
 
@@ -108,7 +121,9 @@ Codex 宿主决定 MCP App 是否获得画中画展示。插件会请求画中�
 
 ## 故障排查
 
-- 源码修改后插件不更新：先运行 `npm run build`，再重新安装对应适配器。
+- 源码修改后插件不更新：先运行 `npm run build`，再重新安装对应适配器并重启宿主。
+- DSH 图标不显示：确认 DSH 版本为 `0.2.2-rc.1` 或之后的 `0.2.x`，并检查 **设置 → 插件** 中 `deepseek-time` 是否已启用；也可以在 profile `package.json` 的 `dsh.profile.bundles` 中确认该条目存在。
+- DSH 提示插件不兼容：先更新本适配器；`engines.dsh` 会阻止在未知版本上加载。只有在确认构建可信时，才用 `dsh plugin allow-version` 或插件管理器授予精确版本豁免。
 - DSH 启动失败：检查 `main`、根导出、`lib/index.js` 和 `dsh.bundle` 是否完整；`lib/index.js` 同时注册余额 Host 路由，不能省略或改成仅客户端空入口。
 - 应用内搜索不到插件：按照本 README 的本地安装方式操作。放到 GitHub 或本地 marketplace 不会自动加入产品官方插件目录。
 - DeepSeek 调整定价规则后：以官方页面为准，并同步更新共享核心及测试。

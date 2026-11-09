@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "DeepSeek Time",
+    "description": "Shows whether DeepSeek is in a peak or off-peak pricing window, counts down to the next Beijing-time boundary, and queries the account balance when hovered.",
+    "detail": "README.md"
+  }
+}

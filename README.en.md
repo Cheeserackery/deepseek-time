@@ -30,12 +30,21 @@ Check DeepSeek's official pricing page before relying on these windows: <https:/
 - Updated the pricing rules to apply peak periods only on Beijing-time weekdays (Monday-Friday), `09:00-12:00` and `14:00-18:00`.
 - Saturday and Sunday are idle all day, with the countdown continuing to the next Monday at `09:00`.
 
+### V12 (2026-11-09)
+
+- Adapted to DeepSeek Harness `0.2.2-rc.1`: the DSH indicator now registers into the frame-wide `shell.overlay` slot instead of the session-scoped `conversation.input.dock`, so it stays visible on the blank New Session screen too.
+- Positioning now reads the documented layout facts (`data-shell-overlay` layer and the sidebar's grid seat), follows sidebar collapse, drawer mode, and window resizes with clamping, and no longer depends on inline `grid-template-columns` styles or first-child guesses.
+- Hover or focus shows a detail card (pricing period, next Beijing-time boundary, account balance); double-click resets a dragged position.
+- Colors, borders, and shadows use DSH theme variables with fallbacks, so the pill follows light and dark themes.
+- Package manifest declares the `0.2.x` plugin contract: `dsh.manifestVersion`, `engines.dsh`, `dsh.client.inject` pointing at `@deepseek-ai/dsh-client-ui-layout`, plus a package icon and `locale/*` metadata so the plugin manager shows title, description, and icon.
+- Fixed the build script's icon path (`图标/` → `icon/`) and added `adapters/dsh/icon.svg` staging, manifest checks, and client-artifact smoke tests.
+
 ## Supported Adapters
 
 The adapters share the tested core in `packages/core/`, but each host has its own package format and installation path.
 
 - `adapters/hermes/`: Hermes Desktop self-contained disk plugin. It appears in the native left status bar and does not affect the composer; it currently shows time status only because Hermes does not expose a credential API to disk plugins.
-- `adapters/dsh/`: DeepSeek Harness (DSH) Web client package. It uses the native conversation dock, supports a remembered draggable position outside the sidebar, and can query the balance through the DSH credential service on hover.
+- `adapters/dsh/`: DeepSeek Harness (DSH) Web client package for DSH `0.2.2-rc.1` and later `0.2.x`. It registers into the frame-wide `shell.overlay` slot so the indicator stays mounted above every session, supports a remembered draggable position, and can query the balance through the DSH credential service on hover.
 - `adapters/codex/deepseek-time/`: Codex plugin with the `show_deepseek_time` MCP tool and live status card. Picture-in-picture depends on Codex host support.
 
 ## Build And Verify
@@ -47,7 +56,7 @@ npm run build
 npm run verify
 ```
 
-`npm run build` stages generated shared modules, the SVG path, the Hermes single-file plugin, and the DSH client bundle. Do not edit generated files under adapter `lib/` or staged `src/` files by hand; edit the source templates and shared core, then rebuild.
+`npm run build` stages generated shared modules, the SVG path, the Hermes single-file plugin, the DSH client bundle, and the DSH package icon. Do not edit generated files under adapter `lib/` or staged `src/` files by hand; edit the source templates and shared core, then rebuild. `npm run verify` also checks the DSH manifest, icon, locale metadata, and the built client bundle's slot registration.
 
 ## Install Hermes Desktop
 
@@ -68,8 +77,10 @@ To update, rebuild and copy the file again. To uninstall, remove the `deepseek-t
 
 ## Install DeepSeek Harness (DSH)
 
+Requires DSH `0.2.2-rc.1` or a later `0.2.x` release. The adapter declares `engines.dsh: ^0.2.2-rc.1`; an incompatible DSH refuses to load it instead of running a mismatched client bundle.
+
 1. Clone this repository and run `npm run build`.
-2. From the DSH Web profile directory, add the local DSH package. Replace `<clone-path>` with the absolute path of this checkout:
+2. From the DSH Web profile directory (usually `<DSH_HOME>\profiles\<profile>`; `%DSH_HOME%\profiles\desktop` for the desktop app), add the local DSH package. Replace `<clone-path>` with the absolute path of this checkout:
 
 ```powershell
 pnpm add "file:<clone-path>\adapters\dsh"
@@ -87,11 +98,13 @@ The structure should look like this; add the entries without replacing the profi
 }
 ```
 
-When upgrading from an older release, change the profile dependency path from `adapters/harness` to `adapters/dsh` before running `pnpm install`; do not keep the old path. For updates, run `npm run build`, repeat the local `pnpm add`/`pnpm install` steps, and restart DSH. Keep `adapters/dsh/lib/index.js`, the package root export, `main`, and `cordis.patch.yml`; these are required for safe DSH startup.
+4. Afterwards you can enable or disable it from **Settings → Plugins** in DSH; the plugin manager writes the same bundle selection and shows this plugin's title, description, and icon. After a DSH upgrade, confirm the plugin is still enabled: an entry carried over from DSH 0.2.x may stay in the profile as "not enabled".
 
-To remove the adapter, first delete `deepseek-time` from the `dsh.profile.bundles` array, then run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH. Do not leave a bundle entry pointing to an uninstalled package.
+When upgrading from an older release, change the profile dependency path from `adapters/harness` to `adapters/dsh` before running `pnpm install`; do not keep the old path. For adapter updates, run `npm run build`, repeat the local `pnpm add`/`pnpm install` steps, and restart DSH. Keep `adapters/dsh/lib/index.js`, the package root export, `main`, and `cordis.patch.yml`; these are required for safe DSH startup.
 
-The DSH adapter requires the host's native `conversation.input.dock` slot. It does not patch DSH source code or inject global CSS. Balance display requires `DEEPSEEK_API_KEY` configured in DSH; the key stays on the Host side and never enters the browser.
+To remove the adapter, disable it in the plugin manager or delete `deepseek-time` from the `dsh.profile.bundles` array, then run `pnpm remove deepseek-time`, `pnpm install`, and restart DSH. Do not leave a bundle entry pointing to an uninstalled package.
+
+The DSH adapter registers into the `shell.overlay` slot declared by `@deepseek-ai/dsh-client-ui-layout`. It does not patch DSH source code or inject global CSS. Balance display requires `DEEPSEEK_API_KEY` configured in DSH; the key stays on the Host side and never enters the browser.
 
 ## Install Codex
 
@@ -108,7 +121,9 @@ Codex controls MCP App presentation. The plugin requests picture-in-picture, but
 
 ## Troubleshooting
 
-- If an adapter is missing after a source change, run `npm run build` before reinstalling it.
+- If an adapter is missing after a source change, run `npm run build`, reinstall it, and restart the host.
+- If the DSH indicator is not visible, check that DSH is `0.2.2-rc.1` or a later `0.2.x` and that `deepseek-time` is enabled under **Settings → Plugins**; also confirm the entry exists in `dsh.profile.bundles` in the profile `package.json`.
+- If DSH reports the plugin as incompatible, update this adapter first: `engines.dsh` refuses to load on unknown versions. Only for a trusted, reviewed build, grant the exact-version exemption with `dsh plugin allow-version` or the plugin manager.
 - If DSH fails to start, restore the package's `main`, root export, `lib/index.js`, and `dsh.bundle` metadata; `lib/index.js` also owns the balance Host route and must not be removed or replaced with a client-only no-op entry.
 - If a plugin cannot be found in an in-app search list, use the documented local installation method. Local disk plugins and local marketplaces are not automatically published to a product's official catalog.
 - All adapters use the same shared time rules and should be checked against the official pricing page when DeepSeek changes its policy.

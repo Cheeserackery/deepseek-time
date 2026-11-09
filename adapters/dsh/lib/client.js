@@ -126,7 +126,7 @@ function getDeepSeekTimeState(instant = Date.now()) {
   }
 }
 
-/** Generated from 图标/DeepSeek.svg. Do not edit manually. */
+/** Generated from icon/DeepSeek.svg. Do not edit manually. */
 
 const DEEPSEEK_MARK_PATH = "M48.8354 10.0479C48.3232 9.79199 48.1025 10.2798 47.8032 10.5278C47.7007 10.6079 47.6143 10.7119 47.5273 10.8076C46.7793 11.624 45.9048 12.1597 44.7622 12.0957C43.0923 12 41.666 12.5356 40.4058 13.8398C40.1377 12.2319 39.2476 11.272 37.8926 10.6558C37.1836 10.3359 36.4668 10.0156 35.9702 9.31982C35.6235 8.82373 35.5293 8.27197 35.356 7.72754C35.2456 7.3999 35.1353 7.06396 34.7651 7.00781C34.3633 6.94385 34.2056 7.2876 34.0479 7.57568C33.418 8.75195 33.1733 10.0479 33.1973 11.3599C33.2524 14.312 34.4736 16.6641 36.8999 18.3359C37.1758 18.5278 37.2466 18.7197 37.1597 19C36.9946 19.5757 36.7974 20.1357 36.624 20.7119C36.5137 21.0801 36.3486 21.1597 35.9624 21C34.6309 20.4321 33.481 19.5918 32.4644 18.5757C30.7393 16.8721 29.1792 14.9917 27.2334 13.52C26.7764 13.1758 26.3193 12.856 25.8467 12.5518C23.8618 10.584 26.1069 8.96777 26.627 8.77588C27.1704 8.57568 26.8159 7.8877 25.0591 7.896C23.3022 7.90381 21.6953 8.50391 19.647 9.30371C19.3477 9.42383 19.0322 9.51172 18.7095 9.58398C16.8501 9.22363 14.9199 9.14355 12.9033 9.37598C9.10596 9.80762 6.07275 11.6396 3.84326 14.7681C1.16455 18.5278 0.53418 22.7998 1.30664 27.2559C2.11768 31.9521 4.46582 35.8398 8.07373 38.8799C11.8159 42.0322 16.1255 43.5762 21.041 43.2803C24.0269 43.104 27.3516 42.6963 31.1016 39.4561C32.0469 39.936 33.0396 40.1279 34.686 40.272C35.9546 40.3921 37.1758 40.208 38.1211 40.0078C39.6021 39.688 39.4995 38.2881 38.9639 38.0322C34.623 35.9678 35.5762 36.8081 34.71 36.1279C36.9155 33.4639 40.2402 30.6958 41.54 21.728C41.6426 21.0161 41.5557 20.5679 41.54 19.9917C41.5322 19.6396 41.6108 19.5039 42.0049 19.4639C43.0923 19.3359 44.1479 19.0317 45.1167 18.4878C47.9292 16.9199 49.064 14.3438 49.3315 11.2559C49.3711 10.7837 49.3237 10.2959 48.8354 10.0479ZM24.3262 37.8398C20.1196 34.4639 18.0791 33.3521 17.2358 33.3999C16.4482 33.4482 16.5898 34.3682 16.7632 34.9678C16.9443 35.5601 17.1812 35.9683 17.5117 36.4878C17.7402 36.832 17.8979 37.3442 17.2832 37.728C15.9282 38.584 13.5728 37.4399 13.4624 37.3838C10.7207 35.7358 8.42822 33.5601 6.81348 30.584C5.25342 27.7197 4.34766 24.6479 4.19775 21.3677C4.1582 20.5757 4.38672 20.2959 5.15869 20.1519C6.17529 19.96 7.22314 19.9199 8.23926 20.0718C12.5327 20.7119 16.1885 22.6719 19.2529 25.7759C21.002 27.5439 22.3252 29.6558 23.6885 31.7202C25.1377 33.9121 26.6978 36 28.6831 37.7119C29.3843 38.312 29.9434 38.7681 30.479 39.104C28.8643 39.2881 26.1699 39.3281 24.3262 37.8398ZM26.3433 24.6001C26.3433 24.248 26.6191 23.9678 26.9658 23.9678C27.0444 23.9678 27.1152 23.9839 27.1782 24.0078C27.2651 24.04 27.3438 24.0879 27.4067 24.1602C27.5171 24.272 27.5801 24.4321 27.5801 24.6001C27.5801 24.9521 27.3042 25.2319 26.9575 25.2319C26.6108 25.2319 26.3433 24.9521 26.3433 24.6001ZM32.6064 27.8799C32.2046 28.0479 31.8027 28.1919 31.4165 28.208C30.8179 28.2397 30.1641 27.9922 29.8096 27.688C29.2583 27.2158 28.8643 26.9521 28.6987 26.1279C28.6279 25.7759 28.6675 25.2319 28.7305 24.9199C28.8721 24.248 28.7144 23.8159 28.2495 23.4238C27.8716 23.104 27.3911 23.0161 26.8633 23.0161C26.666 23.0161 26.4849 22.9277 26.3511 22.856C26.1304 22.7441 25.9492 22.4639 26.1226 22.1201C26.1777 22.0078 26.4458 21.7358 26.5088 21.688C27.2256 21.272 28.0527 21.4077 28.8169 21.7197C29.5259 22.0161 30.0615 22.5601 30.834 23.3281C31.6216 24.2559 31.7632 24.5117 32.2124 25.208C32.5669 25.752 32.8901 26.312 33.1104 26.9521C33.2446 27.3521 33.0713 27.6802 32.6064 27.8799Z"
 
@@ -139,6 +139,59 @@ window.__ModuleLoader__.load({
     const { useEffect, useRef, useState } = require('react')
 
     // The build script injects the shared time logic and supplied SVG path above.
+
+    /** LocalStorage seat of a user-dragged position, in frame-overlay coordinates. */
+    const POSITION_KEY = 'deepseek-time.position'
+    /** Host-side balance route registered by lib/index.js. */
+    const BALANCE_ENDPOINT = '/deepseek-time/balance.json'
+    /** Gap between the sidebar column and the default pill position. */
+    const SIDEBAR_GAP = 6
+    /** Default bottom inset, clear of the composer card. */
+    const BOTTOM_INSET = 96
+    /** Pill width in px; kept here because the default position and the hover card need it. */
+    const PILL_WIDTH = 52
+    /** Approximate width of the hover card, used to pick its side. */
+    const CARD_WIDTH = 184
+
+    const ZH = (() => {
+      try {
+        const language = (document.documentElement.lang || navigator.language || 'zh').toLowerCase()
+        return language.startsWith('zh')
+      } catch {
+        return true
+      }
+    })()
+
+    const TEXT = ZH
+      ? {
+          peak: '高峰时段',
+          idle: '空闲时段',
+          next: '下次切换',
+          balance: '余额',
+          loading: '查询中',
+          missing: '未配置 DEEPSEEK_API_KEY',
+          error: '查询失败',
+          hint: '拖拽移动，双击复位',
+        }
+      : {
+          peak: 'Peak hours',
+          idle: 'Off-peak',
+          next: 'Next change',
+          balance: 'Balance',
+          loading: 'Loading',
+          missing: 'DEEPSEEK_API_KEY is not configured',
+          error: 'Balance unavailable',
+          hint: 'Drag to move, double-click to reset',
+        }
+
+    /** Locale tag handed to Intl; the countdown rules themselves always use Beijing time. */
+    const DATE_LOCALE = ZH ? 'zh-CN' : 'en-US'
+    /** Phrase separator matching the UI language. */
+    const SEP = ZH ? '，' : ', '
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max)
+    }
 
     function useClock() {
       const [now, setNow] = useState(() => Date.now())
@@ -154,95 +207,171 @@ window.__ModuleLoader__.load({
       return now
     }
 
-    function useSidebarDockLeft() {
-      const [left, setLeft] = useState()
+    /**
+     * Measure the sidebar column's right edge and the viewport. The widget mounts into the
+     * frame-wide `shell.overlay` slot and positions itself in viewport coordinates, so this is
+     * the only DOM contract it relies on: the documented overlay attribute and the sidebar's
+     * grid seat. Layout changes, sidebar collapse, drawer mode, and window resizes all feed a
+     * single measurement pass.
+     */
+    function useFrameGeometry(rootRef) {
+      const [geometry, setGeometry] = useState(null)
       useEffect(() => {
-        const frame = document.querySelector('[style*="grid-template-columns"]')
-        const sidebar = frame?.firstElementChild
-        if (frame === null || !(sidebar instanceof HTMLElement)) return
+        const root = rootRef.current
+        const layer = root?.closest?.('[data-shell-overlay]') ?? document.querySelector('[data-shell-overlay]')
+        const frame = layer?.parentElement
 
-        let animationFrame
-        const update = () => {
-          if (animationFrame !== undefined) return
-          animationFrame = requestAnimationFrame(() => {
-            animationFrame = undefined
-            const nextLeft = Math.round(sidebar.getBoundingClientRect().right + 6)
-            if (!Number.isFinite(nextLeft)) return
-            setLeft((current) => current === nextLeft ? current : nextLeft)
+        let frameRequest
+        const measure = () => {
+          const width = window.innerWidth
+          const height = window.innerHeight
+          if (!(width > 0 && height > 0)) return
+          let sidebarRight = 0
+          if (frame instanceof HTMLElement) {
+            for (const child of frame.children) {
+              if (!(child instanceof HTMLElement)) continue
+              const style = getComputedStyle(child)
+              if (style.gridRowStart !== '1' || style.gridColumnStart !== '1') continue
+              if (style.position === 'absolute' || style.position === 'fixed') continue
+              const rect = child.getBoundingClientRect()
+              if (rect.width > 0) {
+                sidebarRight = rect.right
+                break
+              }
+            }
+            if (sidebarRight === 0) {
+              const track = Number.parseFloat(getComputedStyle(frame).gridTemplateColumns)
+              if (Number.isFinite(track)) sidebarRight = frame.getBoundingClientRect().left + track
+            }
+          }
+          const next = {
+            sidebarRight: Math.round(sidebarRight),
+            width: Math.round(width),
+            height: Math.round(height),
+          }
+          setGeometry((current) => current
+            && current.sidebarRight === next.sidebarRight
+            && current.width === next.width
+            && current.height === next.height
+            ? current
+            : next)
+        }
+        const schedule = () => {
+          if (frameRequest !== undefined) return
+          frameRequest = requestAnimationFrame(() => {
+            frameRequest = undefined
+            measure()
           })
         }
-        update()
-        const resizeObserver = new ResizeObserver(update)
-        resizeObserver.observe(sidebar)
-        resizeObserver.observe(frame)
-        const mutationObserver = new MutationObserver(update)
-        mutationObserver.observe(frame, { attributes: true, attributeFilter: ['class', 'style'] })
-        window.addEventListener('resize', update)
-        window.visualViewport?.addEventListener('resize', update)
-        return () => {
-          if (animationFrame !== undefined) cancelAnimationFrame(animationFrame)
-          resizeObserver.disconnect()
-          mutationObserver.disconnect()
-          window.removeEventListener('resize', update)
-          window.visualViewport?.removeEventListener('resize', update)
+
+        measure()
+        const resizeObserver = new ResizeObserver(schedule)
+        if (frame instanceof HTMLElement) {
+          resizeObserver.observe(frame)
+          for (const child of frame.children) if (child instanceof HTMLElement) resizeObserver.observe(child)
         }
-      }, [])
-      return left
+        let mutationObserver
+        if (frame instanceof HTMLElement) {
+          mutationObserver = new MutationObserver(schedule)
+          mutationObserver.observe(frame, { attributes: true, attributeFilter: ['class', 'style', 'data-sidebar-collapsed', 'data-sidebar-drawer'] })
+        }
+        window.addEventListener('resize', schedule)
+        window.visualViewport?.addEventListener('resize', schedule)
+        return () => {
+          if (frameRequest !== undefined) cancelAnimationFrame(frameRequest)
+          resizeObserver.disconnect()
+          mutationObserver?.disconnect()
+          window.removeEventListener('resize', schedule)
+          window.visualViewport?.removeEventListener('resize', schedule)
+        }
+      }, [rootRef])
+      return geometry
+    }
+
+    function formatBoundary(epochMs) {
+      try {
+        return new Intl.DateTimeFormat(DATE_LOCALE, {
+          timeZone: BEIJING_TIME_ZONE,
+          weekday: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }).format(new Date(epochMs))
+      } catch {
+        return ''
+      }
+    }
+
+    function formatAmount(balance) {
+      if (!balance || !Number.isFinite(balance.amount)) return undefined
+      const symbol = balance.currency === 'CNY' ? '¥' : balance.currency === 'USD' ? '$' : `${balance.currency} `
+      return `${symbol}${balance.amount.toFixed(2)}`
     }
 
     function DeepSeekTimeWidget() {
       const state = getDeepSeekTimeState(useClock())
-      const left = useSidebarDockLeft()
-      const [manualPosition, setManualPosition] = useState(null)
+      const rootRef = useRef(null)
+      const dragRef = useRef(null)
+      const geometry = useFrameGeometry(rootRef)
+      const [savedPosition, setSavedPosition] = useState(null)
+      const [draftPosition, setDraftPosition] = useState(null)
+      const [hovered, setHovered] = useState(false)
       const [balance, setBalance] = useState(null)
       const [balanceStatus, setBalanceStatus] = useState('idle')
-      const dragRef = useRef(null)
-      const widgetRef = useRef(null)
 
+      // Restore the last dragged position; a missing or malformed record keeps the default dock.
       useEffect(() => {
         try {
-          const saved = JSON.parse(localStorage.getItem('deepseek-time.position') || 'null')
-          if (saved && Number.isFinite(saved.left) && Number.isFinite(saved.top)) {
-            setManualPosition({ left: saved.left, top: saved.top })
+          const raw = window.localStorage.getItem(POSITION_KEY)
+          if (!raw) return
+          const saved = JSON.parse(raw)
+          if (Number.isFinite(saved?.left) && Number.isFinite(saved?.top)) {
+            setSavedPosition({ left: saved.left, top: saved.top })
           }
-        } catch {}
+        } catch {
+          /* private mode or a hand-edited record: keep the default position */
+        }
       }, [])
 
+      // Keep a dragged position inside the frame when the window or sidebar changes size.
       useEffect(() => {
-        const clampPosition = () => {
-          setManualPosition((current) => {
-            if (!current || !widgetRef.current) return current
-            const rect = widgetRef.current.getBoundingClientRect()
-            const maxLeft = Math.max(0, window.innerWidth - rect.width)
-            const maxTop = Math.max(0, window.innerHeight - rect.height)
-            const next = {
-              left: Math.min(Math.max(0, current.left), maxLeft),
-              top: Math.min(Math.max(0, current.top), maxTop),
-            }
-            return next.left === current.left && next.top === current.top ? current : next
-          })
-        }
-        window.addEventListener('resize', clampPosition)
-        window.visualViewport?.addEventListener('resize', clampPosition)
-        return () => {
-          window.removeEventListener('resize', clampPosition)
-          window.visualViewport?.removeEventListener('resize', clampPosition)
-        }
-      }, [])
+        if (!geometry) return
+        const root = rootRef.current
+        const width = root?.offsetWidth ?? PILL_WIDTH
+        const height = root?.offsetHeight ?? 64
+        setSavedPosition((current) => {
+          if (!current) return current
+          const left = clamp(current.left, 0, Math.max(0, geometry.width - width))
+          const top = clamp(current.top, 0, Math.max(0, geometry.height - height))
+          return left === current.left && top === current.top ? current : { left, top }
+        })
+        setDraftPosition((current) => {
+          if (!current) return current
+          const left = clamp(current.left, 0, Math.max(0, geometry.width - width))
+          const top = clamp(current.top, 0, Math.max(0, geometry.height - height))
+          return left === current.left && top === current.top ? current : { left, top }
+        })
+      }, [geometry])
 
       const loadBalance = () => {
         if (balanceStatus === 'loading') return
         setBalanceStatus('loading')
-        fetch('/deepseek-time/balance.json', { cache: 'no-store' })
-          .then((response) => response.json())
+        fetch(BALANCE_ENDPOINT, { cache: 'no-store', headers: { accept: 'application/json' } })
+          .then((response) => (response.ok ? response.json() : { ok: false, code: 'upstream-unavailable' }))
           .then((value) => {
             if (value?.ok) {
-              setBalance({ amount: value.totalBalance, currency: value.currency, updatedAt: value.updatedAt })
+              const amount = Number(value.totalBalance)
+              if (!Number.isFinite(amount)) {
+                setBalance(null)
+                setBalanceStatus('error')
+                return
+              }
+              setBalance({ amount, currency: typeof value.currency === 'string' ? value.currency : 'CNY' })
               setBalanceStatus('ready')
-            } else {
-              setBalance(null)
-              setBalanceStatus(value?.code === 'credential-missing' ? 'missing' : 'error')
+              return
             }
+            setBalance(null)
+            setBalanceStatus(value?.code === 'credential-missing' ? 'missing' : 'error')
           })
           .catch(() => {
             setBalance(null)
@@ -250,62 +379,185 @@ window.__ModuleLoader__.load({
           })
       }
 
-      const startDrag = (event) => {
+      const beginDrag = (event) => {
         if (event.pointerType === 'mouse' && event.button !== 0) return
-        const element = widgetRef.current
-        if (!element) return
-        const rect = element.getBoundingClientRect()
-        dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, left: rect.left, top: rect.top }
+        const root = rootRef.current
+        if (!root) return
+        const rect = root.getBoundingClientRect()
+        dragRef.current = {
+          pointerId: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          left: rect.left,
+          top: rect.top,
+          maxLeft: Math.max(0, window.innerWidth - rect.width),
+          maxTop: Math.max(0, window.innerHeight - rect.height),
+        }
+        setDraftPosition({ left: Math.round(rect.left), top: Math.round(rect.top) })
         event.currentTarget.setPointerCapture?.(event.pointerId)
         event.preventDefault()
       }
 
+      const positionOf = (drag, event) => ({
+        left: Math.round(clamp(drag.left + event.clientX - drag.startX, 0, drag.maxLeft)),
+        top: Math.round(clamp(drag.top + event.clientY - drag.startY, 0, drag.maxTop)),
+      })
+
       const moveDrag = (event) => {
         const drag = dragRef.current
-        if (!drag || drag.pointerId !== event.pointerId || !widgetRef.current) return
-        const rect = widgetRef.current.getBoundingClientRect()
-        const next = {
-          left: Math.min(Math.max(0, drag.left + event.clientX - drag.startX), Math.max(0, window.innerWidth - rect.width)),
-          top: Math.min(Math.max(0, drag.top + event.clientY - drag.startY), Math.max(0, window.innerHeight - rect.height)),
-        }
-        setManualPosition(next)
+        if (!drag || drag.pointerId !== event.pointerId) return
+        setDraftPosition(positionOf(drag, event))
         event.preventDefault()
       }
 
       const endDrag = (event) => {
         const drag = dragRef.current
         if (!drag || drag.pointerId !== event.pointerId) return
-        const rect = widgetRef.current?.getBoundingClientRect()
-        if (rect) {
-          const next = {
-            left: Math.min(Math.max(0, drag.left + event.clientX - drag.startX), Math.max(0, window.innerWidth - rect.width)),
-            top: Math.min(Math.max(0, drag.top + event.clientY - drag.startY), Math.max(0, window.innerHeight - rect.height)),
-          }
-          setManualPosition(next)
-          try { localStorage.setItem('deepseek-time.position', JSON.stringify(next)) } catch {}
-        }
+        const next = positionOf(drag, event)
         dragRef.current = null
+        setDraftPosition(null)
+        setSavedPosition(next)
+        try {
+          window.localStorage.setItem(POSITION_KEY, JSON.stringify(next))
+        } catch {
+          /* the position is a convenience, not part of the plugin contract */
+        }
+        event.currentTarget.releasePointerCapture?.(event.pointerId)
+        event.preventDefault()
       }
 
-      const amountText = balance ? `${balance.currency === 'CNY' ? '¥' : balance.currency} ${Number(balance.amount).toFixed(2)}` : balanceStatus === 'missing' ? '未配置余额凭据' : balanceStatus === 'loading' ? '余额加载中' : '悬停查询余额'
-      const positionStyle = manualPosition
-        ? { left: manualPosition.left, top: manualPosition.top, bottom: 'auto' }
-        : { bottom: 100, left: left ?? 0 }
-      return jsxs('aside', {
-        ref: widgetRef,
-        role: 'status',
-        'aria-label': `${state.label}: ${state.remainingText}；${amountText}`,
-        title: `${state.label}；${amountText}`,
-        onMouseEnter: loadBalance,
-        onFocus: loadBalance,
-        onPointerDown: startDrag,
-        onPointerMove: moveDrag,
-        onPointerUp: endDrag,
-        onPointerCancel: endDrag,
-        style: { alignItems: 'center', bottom: positionStyle.bottom, display: 'flex', flexDirection: 'column', gap: 4, left: positionStyle.left, padding: '4px 0', position: 'fixed', top: positionStyle.top, touchAction: 'none', cursor: dragRef.current ? 'grabbing' : 'grab', visibility: manualPosition || left !== undefined ? 'visible' : 'hidden', width: 48, zIndex: 8 },
+      const resetPosition = () => {
+        dragRef.current = null
+        setDraftPosition(null)
+        setSavedPosition(null)
+        try {
+          window.localStorage.removeItem(POSITION_KEY)
+        } catch {
+          /* nothing persisted to clear */
+        }
+      }
+
+      const position = draftPosition ?? savedPosition
+      const left = position ? position.left : geometry ? geometry.sidebarRight + SIDEBAR_GAP : undefined
+      const placeCardRight = geometry === null || (left ?? 0) + PILL_WIDTH + CARD_WIDTH + 16 <= geometry.width
+      const phaseLabel = state.phase === 'peak' ? TEXT.peak : TEXT.idle
+      const amountText = formatAmount(balance)
+      const statusText = amountText
+        ?? (balanceStatus === 'loading' ? TEXT.loading : balanceStatus === 'missing' ? TEXT.missing : balanceStatus === 'error' ? TEXT.error : '')
+
+      const pillStyle = {
+        alignItems: 'center',
+        background: 'var(--dsw-alias-bg-overlay, rgba(255, 255, 255, 0.92))',
+        border: '0.5px solid var(--dsw-alias-border-l2, rgba(0, 0, 0, 0.12))',
+        borderRadius: 12,
+        boxShadow: 'var(--dsw-elevation-prominent, 0 2px 10px rgba(0, 0, 0, 0.16))',
+        boxSizing: 'border-box',
+        cursor: dragRef.current === null ? 'grab' : 'grabbing',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        minWidth: PILL_WIDTH,
+        padding: '6px 4px',
+        touchAction: 'none',
+        userSelect: 'none',
+      }
+
+      const rootStyle = {
+        bottom: position ? 'auto' : BOTTOM_INSET,
+        left,
+        position: 'fixed',
+        top: position ? position.top : undefined,
+        visibility: geometry === null ? 'hidden' : 'visible',
+        zIndex: 1,
+      }
+
+      const cardStyle = {
+        background: 'var(--dsw-alias-bg-overlay, rgba(255, 255, 255, 0.98))',
+        border: '0.5px solid var(--dsw-alias-border-l2, rgba(0, 0, 0, 0.12))',
+        borderRadius: 10,
+        boxShadow: 'var(--dsw-elevation-prominent, 0 8px 24px rgba(0, 0, 0, 0.18))',
+        color: 'var(--dsw-alias-label-secondary, #5b5f66)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 6,
+        padding: '8px 10px',
+        pointerEvents: 'none',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: CARD_WIDTH,
+        ...(placeCardRight ? { left: 'calc(100% + 8px)' } : { right: 'calc(100% + 8px)' }),
+      }
+
+      const row = (label, value, color) => jsxs('div', {
+        style: { alignItems: 'center', display: 'flex', fontSize: 11, gap: 6, justifyContent: 'space-between', lineHeight: 1.3, whiteSpace: 'nowrap' },
         children: [
-          jsx('svg', { 'aria-hidden': true, fill: 'none', height: 30, viewBox: '0 0 50 50', width: 30, children: jsx('path', { d: DEEPSEEK_MARK_PATH, fill: state.color }) }),
-          jsx('span', { style: { color: state.color, fontSize: 11, fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' }, children: state.remainingText }),
+          jsx('span', { style: { color: 'var(--dsw-alias-label-tertiary, #8a8f98)' }, children: label }),
+          jsx('span', { style: { color: color ?? 'var(--dsw-alias-label-primary, #1f2329)', fontWeight: 600 }, children: value }),
+        ],
+      })
+
+      return jsxs('aside', {
+        ref: rootRef,
+        role: 'status',
+        'aria-live': 'off',
+        'aria-label': `${phaseLabel}${SEP}${state.remainingText}${statusText ? `${SEP}${TEXT.balance} ${statusText}` : ''}`,
+        tabIndex: 0,
+        onMouseEnter: () => {
+          setHovered(true)
+          loadBalance()
+        },
+        onMouseLeave: () => setHovered(false),
+        onFocus: () => {
+          setHovered(true)
+          loadBalance()
+        },
+        onBlur: () => setHovered(false),
+        style: rootStyle,
+        children: [
+          jsxs('div', {
+            'aria-hidden': true,
+            onPointerDown: beginDrag,
+            onPointerMove: moveDrag,
+            onPointerUp: endDrag,
+            onPointerCancel: endDrag,
+            onDoubleClick: resetPosition,
+            style: pillStyle,
+            children: [
+              jsx('svg', {
+                fill: 'none',
+                height: 26,
+                viewBox: '0 0 50 50',
+                width: 26,
+                children: jsx('path', { d: DEEPSEEK_MARK_PATH, fill: state.color }),
+              }),
+              jsx('span', {
+                style: { color: state.color, fontSize: 11, fontVariantNumeric: 'tabular-nums', fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' },
+                children: state.remainingText,
+              }),
+            ],
+          }),
+          hovered
+            ? jsxs('div', {
+                role: 'tooltip',
+                style: cardStyle,
+                children: [
+                  jsxs('div', {
+                    style: { alignItems: 'center', display: 'flex', fontSize: 12, fontWeight: 600, gap: 6, lineHeight: 1.3, whiteSpace: 'nowrap' },
+                    children: [
+                      jsx('span', { 'aria-hidden': true, style: { background: state.color, borderRadius: '50%', display: 'inline-block', height: 7, width: 7 } }),
+                      jsx('span', { style: { color: state.color }, children: phaseLabel }),
+                    ],
+                  }),
+                  row(TEXT.next, formatBoundary(state.nextBoundary)),
+                  row(TEXT.balance, statusText, balanceStatus === 'error' || balanceStatus === 'missing' ? 'var(--dsw-alias-state-warn-label, #b25c00)' : undefined),
+                  jsx('div', {
+                    style: { color: 'var(--dsw-alias-label-tertiary, #8a8f98)', fontSize: 10, lineHeight: 1.3, whiteSpace: 'nowrap' },
+                    children: TEXT.hint,
+                  }),
+                ],
+              })
+            : null,
         ],
       })
     }
@@ -313,8 +565,11 @@ window.__ModuleLoader__.load({
     const name = 'deepseek-time'
     const inject = ['slots']
     function apply(ctx) {
-      ctx.slots.inject('conversation.input.dock', () => ctx.slots.register({
-        name: 'conversation.input.dock',
+      // `shell.overlay` (declared by @deepseek-ai/dsh-client-ui-layout) is the frame-wide
+      // floating layer: it stays mounted across sessions and sits outside every scroll
+      // container, which is what a status pill that can be dragged anywhere needs.
+      ctx.slots.inject('shell.overlay', () => ctx.slots.register({
+        name: 'shell.overlay',
         id: 'deepseek-time',
         order: 20,
       }, DeepSeekTimeWidget))
